@@ -1,0 +1,27 @@
+<!-- Copyright (c) 2012 Mobile Developer Solutions -->
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <title>PRAGO</title>
+
+ 	<script src="jquery.mobile/jquery-1.7.2.min"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova-2.4.0.js"></script>
+	
+	</head>
+	<body>
+	<script>
+		$(function()
+		{
+			var size = $(window).width();
+			//alert(size);
+			if(size>630) window.location="tablet.html";
+			else if(size<630) window.location="mobile.html";
+			else alert("no");
+			
+			
+			
+		});
+	</script>
+	</body>
+	</html>

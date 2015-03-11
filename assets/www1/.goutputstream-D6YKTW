@@ -1,0 +1,759 @@
+<!-- Copyright (c) 2012 Mobile Developer Solutions -->
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <title>PRAGO</title>
+
+ 	<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.3.0.css" />
+	<script src="jquery.mobile/jquery-1.7.2.min"></script>
+	<script src="jquery.mobile/jquery.mobile-1.3.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova-2.4.0.js"></script>
+	
+	<script type="text/javascript" charset="ISO-8859-1" src="js/bluetooth.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/soapclient.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/startapp.js"></script>
+
+	<!--<script type="text/javascript" charset="utf-8" src="index.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/accelerometer.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/camera.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/capture.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/compass.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/connection.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/contacts.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/device.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/events.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/file.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/geolocation.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/media.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/notification.js"></script>
+	<script type="text/javascript" charset="utf-8" src="apis/storage.js"></script>-->
+	
+	
+	
+	<script  type="text/javascript" charset="ISO-8859-1">
+
+	 var db; 
+	 var g_socketid = -1;
+	 var ecgMeasurement = 1;
+	 var dataCnt = 0;
+	 var getPlotVal='';
+	 var dataValidECG = 0;
+
+	
+	/*window.addEventListener('load', function () {
+	    document.addEventListener('deviceready', onDeviceReady, false);
+	}, false);*/
+	function onDeviceReady()
+	{
+        //  pictureSource=navigator.camera.PictureSourceType;
+        //  destinationType=navigator.camera.DestinationType;
+        
+        db = window.openDatabase("EMRDB", "1.0", "Patient Database", 200000);
+        
+        db.transaction(initializeDB, errorCB, successCB);
+	db.transaction(selectTB, errorCB, successTBS);
+	
+
+        //alert("Device Ready");
+     	//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail)
+        window.plugins = {
+        		BluetoothPlugin: cordova.require( 'cordova/plugin/bluetooth' )
+        };
+        // enableBT();
+   	/*var options = new ContactFindOptions();
+        options.filter="Sruti"; 
+        var fields = ["displayName", "name", "phoneNumbers"];
+        navigator.contacts.find(fields, onContactSuccess, onContactError, options);
+        */
+        }
+	function insertredy()
+	{
+		db.transaction(insertTB, errorCB, successTB);
+	}
+	function selectval1()
+	{
+		db.transaction(selectTB, errorCB, successTBS);
+		//alert("selected");
+	}
+	function delval()
+	{
+		db.transaction(deleteTV, errorCB, successTBS);
+	}
+	$(function(){
+		$("#regs1").addClass("ui-btn-active ui-state-persist");
+		$("#Medidets1").removeClass("ui-btn-active ui-state-persist");
+		$('#registernav').show();
+		$('#Register').show();
+		$('#MediDet').hide();	
+		$('#bluth').hide();
+		$('#skyp').hide();	
+		$('#chat1').hide();	
+	
+		//$("#bondedBT").click(function (){});
+		$("#selectval").click(function (){insertredy();selectval1();});
+		//$("#delch").click(function (){delval();selectval1();});
+
+
+	$("#reg").click(function (){
+		$('#registernav').show();
+		$("#regs1").addClass("ui-btn-active ui-state-persist");
+		$("#Medidets1").removeClass("ui-btn-active ui-state-persist");
+		$('#Register').show();
+		$('#MediDet').hide();	
+		$('#bluth').hide();	
+		$('#chat1').hide();
+		$('#skyp').hide();	
+	
+	});
+	$("#chat").click(function (){
+		$('#registernav').hide();
+		$('#Register').hide();
+		$('#MediDet').hide();
+		$('#bluth').hide();
+		$('#chat1').show();	
+		$('#skyp').hide();	
+	
+	});
+	$("#skype").click(function (){
+		$('#registernav').hide();
+		$('#Register').hide();
+		$('#MediDet').hide();
+		$('#bluth').hide();
+		$('#skyp').show();
+		$('#chat1').hide();
+			
+	});
+	$("#bth").click(function (){
+		$('#registernav').hide();
+		$('#Register').hide();
+		$('#MediDet').hide();
+		$('#chat1').hide();	
+		$('#bluth').show();	
+		$('#skyp').hide();	
+
+	});
+	$("#Medidets1").click(function (){
+		$('#registernav').show();
+		$('#Register').hide();
+		$('#MediDet').show();
+		$('#bluth').hide();		
+		$('#chat1').hide();	
+		$('#skyp').hide();	
+
+	});
+		$("#Medidets2").click(function (){
+		$('#Register').hide();
+		$('#MediDet').show();
+		$('#bluth').hide();	
+		$('#chat1').hide();	
+		$('#skyp').hide();	
+	
+	});
+	$("#regs1").click(function (){
+		$('#registernav').show();
+		$('#Register').show();
+		$('#MediDet').hide();
+		$('#bluth').hide();			
+		$('#chat1').hide();
+		$('#skyp').hide();		
+
+	});
+	$("#regs2").click(function (){
+		$('#Register').show();
+		$('#MediDet').hide();
+		$('#bluth').hide();	
+		$('#chat1').hide();	
+		$('#skyp').hide();	
+
+	});
+});
+	</script>
+
+<script type="text/javascript">
+	$(function(){//start
+	
+
+	$("#temp").click(function (){alert("temp");});
+	$("#torchOn").click(function (){alert("torchOn");});
+	$("#bpm").click(function (){alert("bpm");});
+	$("#pox").click(function (){alert("pox");});
+	$("#steth ").click(function (){alert("steth");});
+	//$("#glucometer").click(function (){alert("glucometer");});
+	$("#discoverBT").click(function (){discoverDevices();});
+
+	$( "#bt-connect" ).click(function( event, ui ) {
+		openRfcomm();
+			        /*  switch ($( "#bt-connect" ).val())
+			          {
+			            case "connect" : openRfcomm();break;
+			            case "disconnect" : closeRfcomm();break;
+			          }*/
+
+//			alert($( "#enableBT" ).val());			
+		});	
+
+	$("#glucometer").click(function (){writeRfcomm('g');});
+	
+	$("#delch").click(function () {
+		var x;
+		var r=confirm("Delete A Selected Bluetooth Device(s)!");
+		if (r==true)
+		  {
+		  delval();
+		  selectval1();
+		  }
+		else{}
+	});
+});//end
+
+	function discoverDevices()
+	 {
+ 		$("#discovering").show();
+ 	  	window.plugins.BluetoothPlugin.discoverDevices( function(devices) {
+		$("#discovering").hide();
+		$('#bt-devices-select').html('');
+ 	   	$('#bt-devices-select').append( $( '<option value="null">-select Device From List-</option>' ) );
+ 	   	for( var i = 0; i < devices.length; i++ )
+		 {
+ 	   		$('#bt-devices-select').append( $( '<option value="' + devices[i].address + '">' + devices[i].name + '</option>' ) );
+ 	      	 }
+
+	    }, 	function(error) { alert( 'Error: ' + error ); } );
+    
+  	  }
+	function writeRfcomm(data) 
+         {
+		$('#bt-data-dump').html( '');
+		window.plugins.BluetoothPlugin.write( bp_writeSuccess, bp_writeError, g_socketid,data );
+	 }
+
+	function bp_writeSuccess( p_data )
+	 {
+	 	// Continue reading...
+	 	window.plugins.BluetoothPlugin.read( bp_readSuccess, bp_readError, g_socketid );
+		return;
+	}
+	
+	function bp_writeError( error ) 
+	{
+		alert( 'Error: ' + error );
+	}
+
+	function initializeDB(tx) 
+	{
+    	//tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Bluevalue (dname, daddress)');
+        // tx.executeSql('INSERT INTO DEMO2 (dname, daddress) VALUES (1234,"abcd")');
+	}
+		
+	function successCB() 
+	{
+        //alert("ASHA+ is now loaded!");
+        //alert("success!");
+   	}
+    
+	function errorCB(err) {
+   	alert("Error processing SQL: " + err.code);
+  	}
+	
+	function insertTB(tx)
+	{
+	   var devna = $("#bt-devices-select").val();  
+	   //var devna = 1;
+           var devad = $("#bt-bondeddevices-select").val();
+	   tx.executeSql('INSERT INTO Bluevalue (dname, daddress) VALUES ("' +devna+'","'+devad+'")');
+	}
+	
+	function successTB() 
+	{
+        //alert("ASHA+ is now loaded!");
+     	//  alert("Inserted!");
+   	}
+
+	function successTBS() 
+	{
+        //alert("ASHA+ is now loaded!");
+        //  alert("Selected!");
+   	}
+	function selectTB(tx)
+	{
+	tx.executeSql('SELECT * FROM Bluevalue', [], readSuccess, errorCB);
+	//console.log('SELECT * FROM Bluevalue');
+	}
+	function deleteTV(tx)
+	{
+	 tx.executeSql('DELETE FROM Bluevalue', [], delval1, errorCB);
+         //console.log('SELECT * FROM Bluevalue');
+	}
+
+	function delval1()
+	{
+	 //alert("deleted");	
+	}
+
+	function readSuccess(tx, results)
+	{
+	
+	  var len = results.rows.length;
+          $('#readSuccess1').html( len + " Devices Available.");
+	  //$('#readSuccess').append("<table border>");
+	  $('#readSuccess').html("<th>S.No</th><th>Device Type</th><th>Device Address</th><th> </th>");
+    	  for (var i=0; i<len; i++)
+	    {
+         	$('#readSuccess').append("<tr><td>"+i+"</td><td>"+results.rows.item(i).daddress+"</td><td>"+ results.rows.item(i).dname +"</td><td><INPUT type=checkbox name=chks ></td></tr>");
+	//   $('#readSuccess').append("Row = " + i + " name = " + results.rows.item(i).dname + " address =  " + results.rows.item(i).daddress);
+	
+	
+       	    }
+	}	
+
+	function bp_readSuccess( p_data ) {
+	var getVal = new Array();
+	getVal = p_data.split(/,|\s|_/);
+	var deg = 248;
+	//alert(p_data[0]);
+	//	$('#bt-data-dump').html('<br><b>'+getVal[0]+'</b>' );	
+	switch (getVal[0])
+	{
+ 		case 'M' : $('#measuring-dump').html('<br><b>Measuring... </b>' );
+   			   $('#measuring-dump').show();
+			   window.plugins.BluetoothPlugin.read( bp_readSuccess, bp_readError, g_socketid );
+			   break;
+		case 'E' : var errordisplay ='';
+			   var eI = 0;
+			   var eJ = 0;
+			   for (eI=1;eI<getVal.length-1;eI++)
+			   {
+				errordisplay = errordisplay + getVal[eI] + ' ';
+			   }
+			   $('#error-dump').html('<br><b>Error: ' + errordisplay + '</b>' );
+			   $('#error-dump').show();
+			   break;
+		case 'C' : $('#bt-data-dump').html('<br><b>' + getVal[1] + ' ' + getVal[2] + '...</b>' );
+			   window.plugins.BluetoothPlugin.read( bp_readSuccess, bp_readError, g_socketid );
+			   $('#bt-data-dump').show();
+			   $('#error-dump').hide();
+			   break;
+		case 'B' : $("#sys").val(getVal[1]);
+			   $("#dia").val(getVal[2]);
+			   $('#bpm-dump').show();
+			   $('#error-dump').hide();
+			   $('#bt-data-dump').hide();
+			   break;
+		case 'O' : $("#spo2").val(getVal[1]);
+			   $("#pulse").val(getVal[2]);
+			   $('#spo2-dump').show();
+			   $('#error-dump').hide();
+			   $('#bt-data-dump').hide();
+			   break;
+		case 'T' : $("#therm").val(getVal[3]);
+			   $('#therm-dump').show();
+ 			   $('#error-dump').hide();
+			   $('#bt-data-dump').hide();//&deg;F
+			   break;
+		case 'P' : if (headerVal==1)
+				{
+					headerVal=0;
+					window.plugins.BluetoothPlugin.read( bp_readSuccess, bp_readError, g_socketid );
+				}
+				else
+				{
+					headerVal = 1;
+					$("#gluco").val(getVal[9]);$('#gluco-dump').show();//&deg;F
+				}
+				break;
+		
+	}
+	
+	return;
+}
+
+	function bp_readError( error ) 
+	{
+		alert( 'Error: ' + error );
+	}
+
+
+function openRfcomm() 
+{
+		if ($( '#bt-devices-select' ).val())
+		{
+			console.log( 'Discovery connect' );
+			window.plugins.BluetoothPlugin.connect(
+				function(socketId) {
+					g_socketid = socketId;
+					console.log( 'Socket-id: ' + g_socketid );
+					alert( 'Connected with ' + $( '#bt-devices-select' ).val());
+					
+				},
+				function(error) {
+					alert( 'Error: ' + error );
+				},
+				$( '#bt-devices-select' ).val(),
+				"00001101-0000-1000-8000-00805f9b34fb"
+			);
+		}
+	else
+	{
+		window.plugins.BluetoothPlugin.connect(
+			function(socketId) {
+				g_socketid = socketId;
+				console.log( 'Socket-id: ' + g_socketid );
+				alert( 'Connected with ' + $( '#bt-bondeddevices-select' ).val());
+				},
+			function(error) {
+				alert( 'Error: ' + error );
+			},
+			$( '#bt-bondeddevices-select' ).val(),
+			"00001101-0000-1000-8000-00805f9b34fb"
+		);
+	}
+}
+
+function closeRfcomm()
+{
+	window.plugins.BluetoothPlugin.disconnect(
+		function() 
+		{
+			alert( 'Disconnected');
+		},
+		function(error) 
+		{
+			alert( 'Error: ' + error );
+		},
+		g_socketid );
+}
+
+	
+</script>
+	
+
+<style type="text/css">
+	.longflip .ui-slider-switch { width: 9em; height:50px; }
+	.genderlongflip .ui-slider-switch { width: 9em;}
+	.genderlongflip .ui-slider-switch span{ }
+
+
+	.table1 {
+	    color: black;
+	    background: #fff;
+	    border: 1px solid #b4b4b4;
+	    font: 17px helvetica;
+	    padding: 0;
+	    margin-top:10px;
+	    width: 100%;
+	    -webkit-border-radius: 8px;
+	}
+     
+	.table1 tr td {
+	    color: #666;
+	    border-bottom: 1px solid #b4b4b4;
+	    border-right: 1px solid #b4b4b4;
+	    padding: 10px 10px 10px 10px;
+	    background-image: -webkit-linear-gradient(top, #fdfdfd, #eee);
+	}
+	 .table1 th {
+	    color: #fff;
+	    font-weight:bold;
+	    border-bottom: 1px solid #b4b4b4;
+	    border-right: 1px solid #b4b4b4;
+	    padding: 10px 10px 10px 10px;
+	    background-image: -webkit-linear-gradient(top, #5797C7, #a6dafc);
+	}        
+	.table1 tr td:last-child {
+	    border-right: none;
+	}
+	
+	.table1 tr:last-child td {
+	    border-bottom: none;
+	}
+	
+	
+	.btnGreen { background: green;}
+	.btnOrange { background: orange;}
+	.btnRed { background: red;}
+</style>
+
+</head>
+  
+  <body onload="onDeviceReady()">
+	
+	<div data-role="page" id="mainpage"  data-theme="c">
+
+	<div data-role="header" data-theme="b">
+		<h1 style="text-align:left; margin-left:50px;"><span style="font-size:x-large;">Prago</span></h1>
+		<img align="right" src="images/Panasonic.png"  class="ui-btn-right"/><br>
+	</div>
+	<div  data-role="navbar">
+		<ul>
+		<li><a id="reg"  class="ui-btn-active ui-state-persist"><img align="center" src="images/emr.png" width="50" height="50"/></a></li>
+		<li><a id="chat"><img align="center" src="images/chat.png" width="50" height="50"/></a></li>
+		<li><a id="skype"><img align="center" src="images/skype.png" width="50" height="50"/></a></li>
+		<li><a id="bth"><img align="center" src="images/bt.png" width="50" height="50"/></a></li>
+		</ul> 
+	
+	</div>
+	
+	<div data-role="content">	
+
+	<!--start basic details-->
+		
+	<div  id="registernav" data-role="navbar">
+			<ul>
+				<li><a id="regs1" class="ui-btn-active ui-state-persist">Register</a></li>
+				<li><a id="Medidets1">Medical Details</a></li>
+			</ul> 
+	</div>
+	<div id="Register" style="display:none">
+		    <input  type="search" style="font-size:large;color:gray;" data-mini="true" name="PtId" id="PtId" size=20 value="Patient Id" onfocus="if(this.value=='Patient Id'){this.value=''};this._haschanged=true;this.style.color = 'black';"   onblur="if(this.value==''){this.value='Patient Id';this.style.color='gray';};" data-mini="true"/>
+		    <button id="ptIdSrch" data-corners="false" >Get Details</button>
+	            <div id="resdet" style="display:none;" data-role="fieldcontain"><select name="resdetSel" id="resdetSel">
+</select></div>
+		    <input type="text" class="PtFields" style="font-size:large;color:gray;" name="Ptname" id="Ptname" size=20 value="Patient Name" onfocus="if(this.value=='Patient Name'){this.value=''};this._haschanged=true;this.style.color = 'black';"   onblur="if(this.value==''){this.value='Patient Name';this.style.color='gray';};"/>
+		    <input type="text" class="PtFields" style="font-size:large;color:gray;" name="Ptmob" id="Ptmob" size=20 value="Mobile No." onfocus="if(this.value=='Mobile No.'){this.value=''};this._haschanged=true;this.style.color = 'black';"   onblur="if(this.value==''){this.value='Mobile No.';this.style.color='gray';};"/>
+		    <div data-role="fieldcontain">
+		    <input type="text" class="PtFields" style="font-size:large;color:gray;" name="Ptdob" id="Ptdob" size=20 value="Date of Birth" onfocus="if(this.value=='Date of Birth'){this.value=''};this._haschanged=true;this.style.color = 'black';"   onblur="if(this.value==''){this.value='Date of Birth';this.style.color='gray';};" data-mini="true" />
+		    </div>
+		    <input type="text" class="PtFields" style="font-size:large;color:gray;" name="Ptage" id="Ptage" size=5 value="Age"  onblur="if(this.value==''||this.value=='Not received'){this.value='Age';this.style.color='gray';};" data-mini="true"/>
+		<div class="genderlongflip">
+			<select name="gender" id="Ptgender" data-role="slider">
+				<option  value="m"  >Male</option>
+				<option  value="f" >Female</option>
+			</select> 
+		</div>
+		<div data-role="fieldcontain">
+		<textarea name="textarea" id="Ptadd" class="PtFields" style="color:gray;" onfocus="if(this.value=='Address'){this.value=''};this._haschanged=true;this.style.color = 'black';" onblur="if(this.value==''){this.value='Address'};this.style.color='gray';"  >Address</textarea>
+		</div>
+<!--
+	    <button onclick="capturePhotoEdit();" data-corners="false" >Capture Editable Photo</button> <br>
+	    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" data-corners="false" >From Photo Library</button><br>
+	    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);" data-corners="false" >From Photo Album</button><br>
+-->
+	    <button onclick="capturePhoto();" data-corners="false" >Capture Photo</button>
+	    <img style="display:none;width:300px;height:200px;" id="smallImage" src="" />
+	    <input type="hidden" id="Ptphoto" val=""/>
+	    <div id="tstImage"></div>
+	    
+<!--
+	    <button id="getDet" data-corners="false" data-icon="search" data-iconpos="right" >Get Details</button>
+	    <img style="display:none;" id="largeImage" src="" />
+-->
+	</div>
+	
+	<div id="MediDet" style="display:none">
+
+
+		<div data-role="fieldcontain">
+		    <input type="text" name="uid" id="uid" size=20 value="Enter Id" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;" />
+		</div>
+		<div data-role="fieldcontain">
+			<textarea name="textarea" id="PtComplaint" class="PtFields" style="color:gray;" onfocus="if(this.value=='Mention Complaints'){this.value=''};this._haschanged=true;this.style.color = 'black';" onblur="if(this.value==''){this.value='Mention Complaints'};this.style.color='gray';"  >Mention Complaints</textarea>
+		</div>
+<!--
+	<div class="ui-grid-d" data-mini="true" data-corners="false" >
+	<div class="ui-block-a"><button id="torchOn" data-mini="true" data-corners="false" ><img src="images/torch.png" style="height:100px;width:100px;"></img></button></div>
+	<div class="ui-block-b"><button id="bpm" data-mini="true" data-corners="false" ><img src="images/bp.png" style="height:100px;width:100px;"></img></button></div>	   
+	<div class="ui-block-c"><button id="bpm" data-mini="true" data-corners="false" ><img src="images/pox.png" style="height:100px;width:100px;"></img></button></div>	   
+	<div class="ui-block-d"><button id="temp" data-mini="true" data-corners="false" ><img src="images/thermo.png" style="height:50px;width:50px;"></img></button></div>	   
+	<div class="ui-block-e"><button id="steth" data-mini="true" data-corners="false" ><img src="images/steth.png" style="height:50px;width:50px;"></img></button></div>	   
+	</div>
+--><!-- by me
+	<div data-role="controlgroup" data-type="horizontal" data-corners="false" >
+			<a data-role="button" id="torchOn" data-corners="false" data-inline="true"><img src="images/torch.png" style="height:60px;width:40px;"></img></a>
+			<a data-role="button"  id="bpm" data-corners="false"  data-inline="true"><img src="images/bp.png" style="height:60px;width:40px;"></img></a>	   
+			<a data-role="button"  id="pox" data-corners="false"  data-inline="true"><img src="images/pox.png" style="height:60px;width:40px;"></img></a>	   
+			<a data-role="button"  id="temp" data-corners="false"  data-inline="true"><img src="images/thermo.png" style="height:60px;width:40px;"></img></a>	   
+			<a data-role="button"  id="steth" data-corners="false"  data-inline="true"><img src="images/steth.png" style="height:60px;width:40px;"></img></a> 
+			<a data-role="button"  id="glucometer" data-corners="false"  data-inline="true"><img src="images/sml.png" style="height:60px;width:40px;"></img></a>
+			<a data-role="button"  id="ecg" data-corners="false"  data-inline="true"><img src="images/ecg.png" style="height:60px;width:40px;"></img></a>
+		</div> 	   
+
+		<div class="ui-grid-solo">
+			<div id="stopDiv" class="ui-block-a"><button id="torchOff"  data-theme="a" data-icon="delete" >STOP/OFF</button></div>
+		</div>-->
+		
+		<div id='bt-data-dump'  style="display : none"></div>
+		<div id="measuring-dump'  style="display : none" ></div>
+		<div id='error-dump' style="display : none"></div>
+		<div id="chart1" style="height:180px; display : none "></div>
+		<div id="chart2" style="height:180px; display : none "></div>
+		<div id="chart3" style="height:180px; display : none "></div>
+		<div id='bpm-dump'  style="display : none">
+				<h1>SYS</h1>
+				<input type="text" id="sys" name="sys" value="null" style="font-size:20px;font-weight:bold"/>
+				<h1>DIA</h1>
+				<input type="text" id="dia" name="dia" value="null" style="font-size:20px;font-weight:bold"/>
+		</div>
+		<div id='spo2-dump'  style="display : none">
+			<h1>SpO2</h1>
+			<input type="text" id="spo2" name="spo2" value="0"  style="font-size:20px;font-weight:bold"/>
+			<h1>Pulse</h1>
+			<input type="text" id="pulse" name="pulse" value="null" style="font-size:20px;font-weight:bold"/>		
+		</div>
+		<div id='therm-dump' style="display : none">
+			<h1>Temperature</h1>
+			<h1><input type="text" id="therm" name="therm" value="null" style="font-size:20px;font-weight:bold"/></h1>
+		</div>
+		<div id='gluco-dump' style="display : none">
+			<h1>Glucose Level</h1>
+			<input type="text" id="gluco" name="gluco" value="0" style="font-size:20px;font-weight:bold"/>
+		</div>
+		<!--<input data-role="button" type="submit" value ="SEND" name="bpSend" id="bpSend" data-theme='b'/input>-->
+	
+
+
+
+
+	<table width="100%" height="100%" class="table1">
+	<tr><th>Torch</th><th>B.P</th><th>Finger Oximeter</th></tr>
+	<tr>
+	<td height="100">
+	<table border width="100%">
+	<tr><td width="50%">
+	<a data-role="button" id="torchOn" data-corners="false" data-inline="true">
+	<img src="images/torch.png"style="height:60px;width:40px;"></img></a>
+	</td><td>
+	<div id="torchGreen" class="btnGreen" style="display:none">&nbsp;</div>
+	<div id="torchOrange" class="btnOrange" style="display:none">&nbsp;</div>
+	<div id="torchRed" class="btnRed" style="display:none">&nbsp;</div>
+	</td></tr>
+	<tr><td colspan=2 width="100%">Result</td></tr>
+	</table>
+	</td>
+
+	<td height="100">
+	<table border width="100%">
+	<tr><td width="50%">
+	<a data-role="button"  id="bpm" data-corners="false"  data-inline="true">
+	<img src="images/bp.png" style="height:60px;width:40px;"></img></a>	   
+	</td><td>
+	<div id="bpmGreen" class="btnGreen"style="display:none">&nbsp;</div>
+	<div id="bpmOrange" class="btnOrange"style="display:none">&nbsp;</div>
+	<div id="bpmRed" class="btnRed"style="display:none">&nbsp;</div>
+	</td></tr>
+	<tr><td colspan=2 width="100%">Result</td></tr>
+	</table>
+	</td>
+	
+	<td height="100">
+	<table border width="100%">
+	<tr><td width="50%"><a data-role="button"  id="pox" data-corners="false"  data-inline="true">
+	<img src="images/pox.png" style="height:60px;width:40px;"></img></a>	   
+	</td><td>
+	<div id="poxGreen" class="btnGreen"style="display:none">&nbsp;</div>
+	<div id="poxOrange" class="btnOrange"style="display:none">&nbsp;</div>
+	<div id="poxRed" class="btnRed"style="display:none">&nbsp;</div>
+	</td></tr>
+	<tr><td colspan=2 width="100%">Result</td></tr>
+	</table>
+	</td>
+	
+	</tr>
+	
+	<tr><th>Thermometer</th><th>stethoscope</th><th>Glucometer</th></tr>
+	<tr>
+	<td height="100">
+	<table border width="100%">
+	<tr><td width="50%"><a data-role="button"  id="temp" data-corners="false"  data-inline="true">
+	<img src="images/thermo.png" style="height:60px;width:40px;"></img></a>	   
+	</td><td>
+	<div id="tempGreen" class="btnGreen"style="display:none">&nbsp;</div>
+	<div id="tempOrange" class="btnOrange"style="display:none">&nbsp;</div>
+	<div id="tempRed" class="btnRed"style="display:none">&nbsp;</div>
+	</td></tr>
+	<tr><td colspan=2 width="100%">Result</td></tr>
+	</table>
+	</td>
+	
+	<td height="100">
+	<table border width="100%">
+	<tr><td width="50%"><a data-role="button"  id="steth" data-corners="false"  data-inline="true">
+	<img src="images/steth.png" style="height:60px;width:40px;"></img></a> 
+	</td><td>
+	<div id="stethGreen" class="btnGreen"style="display:none">&nbsp;</div>
+	<div id="stethOrange" class="btnOrange"style="display:none">&nbsp;</div>
+	<div id="stethRed" class="btnRed"style="display:none">&nbsp;</div>
+	</td></tr>
+	<tr><td colspan=2 width="100%">Result</td></tr>
+	</table>
+	</td>
+	
+	<td height="100">
+	<table border width="100%">
+	<tr><td width="50%"><a data-role="button"  id="glucometer" data-corners="false"  data-inline="true">
+	<img src="images/sml.png" style="height:60px;width:40px;"></img></a></td>
+	<td>
+	<div id="glucometerGreen" class="btnGreen"style="display:none">&nbsp;</div>
+	<div id="glucometerOrange" class="btnOrange"style="display:none">&nbsp;</div>
+	<div id="glucometerRed" class="btnRed"style="display:none">&nbsp;</div>
+	</td></tr>
+	<tr><td colspan=2 width="100%">Result</td></tr>
+	</table>
+	</td>
+	
+	</tr>
+	
+	</table>
+	<input data-role="button" type="submit" value ="SEND" name="bpSend" id="bpSend" data-theme='b'/input>
+	</div>
+
+<!--end basic details-->
+
+
+<!--start bluetooth-->
+
+<div id="bluth" style="display:none">
+
+	<button id="discoverBT" data-mini="true" data-corners="false">Discover</button>
+	<div id="discovering" style="display:none;">Discovering...</div>
+	<select id='bt-devices-select' data-corners="false">
+	
+       	</select>	
+      	<select id='bt-bondeddevices-select' data-corners="false">
+		<option value="null">-select Device From List-</option>
+		<option value="+tronic SwissKnife">+tronic SwissKnife</option>
+		<option value="Ultra2 Glucometer">Ultra2 Glucometer</option>
+		<option value="3 Lead ECG">3 Lead ECG</option>
+		<option value="Weighing Scale">Weighing Scale</option>       	
+	</select>
+
+	<!--<button id="bondedBT" data-mini="true" data-corners="false">Bonded Devices</button>-->
+
+	<table width="75%" class="table1"> <tr>
+	<td><button id="selectval" data-mini="true" data-corners="false">ADD</button></td>
+	<td><button id=delch data-mini=true data-corners=false onclick="deleteTV(&#39;readSuccess&#39;)">Delete</button></td>
+	</tr></table>
+
+	<span id="readSuccess1"></span>
+	<table id="readSuccess" class="table1"><tr><th>S.No</th><th>Device Type</th><th>Device Address</th><th> </th></tr></table>
+	
+	<!--<div class="longflip">
+	    <select name="bt-connect" id="bt-connect" data-role="slider" >
+		<option  value="disconnect">Disconnected</option>
+		<option  value="connect" >Connected</option>
+	    </select> 
+
+	</div>-->
+</div>
+<!--end bluetooth-->
+
+
+<!--chat start-->
+<div id="chat1"> chatting...</div>
+<!--chat end-->
+
+
+<!--skype start-->
+<div id="skyp"> Skype start...</div>
+<!--skype end-->
+
+</div>
+		
+	<div data-role="footer" data-position="fixed" align="right" data-theme="b">
+	<h3 >&copy; 2013 Developed by <img src="images/prago.png"  height=32px /></h3>
+	</div>
+	</div>
+	 			
+  </body>
+</html>
