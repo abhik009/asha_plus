@@ -78,6 +78,43 @@ a {
 /***
 General backgrounds
 ***/
+.bg-bpmbg {
+  background-image: none !important;
+  background-color: #662c91 !important;
+}
+.bg-torchbg {
+  background-image: none !important;
+  background-color: #cf224f !important;
+}
+.bg-steathbg {
+  background-image: none !important;
+  background-color: #3646ad !important;
+}
+.bg-thermo {
+  background-image: none !important;
+  background-color: #808080 !important;
+}
+.bg-gluco {
+  background-image: none !important;
+  background-color: #2b254a !important;
+}
+.bg-ecgbg {
+  background-image: none !important;
+  background-color: #004578 !important;
+}
+.bg-spo2bg {
+  background-image: none !important;
+  background-color: #30a443 !important;
+}
+.bg-videobg {
+  background-image: none !important;
+  background-color: #ef5f27  !important;
+}
+.bg-watsapp {
+  background-image: none !important;
+  background-color: #309323  !important;
+}
+
 .bg-blue {
   background-image: none !important;
   background-color: #4b8df8 !important;

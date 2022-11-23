@@ -39,9 +39,9 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-						<h3 class="page-title">
+						<!--<h3 class="page-title">
 							Asha+ <small></small>
-						</h3>
+						</h3>-->
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home"></i>
@@ -78,16 +78,16 @@
 														<button id="discoverBT" class="btn blue m-wrap span12">Discover <img class="hide" align='right' width="22"  src="images/ajax-modal-loading.gif" id="disimg"></button> 
 															
 															<select id='bt-devices-select' class="m-wrap span12 hide"></select>											
-															<select class="m-wrap span12" id='bt-bondeddevices-select'>
+															<!--<select class="m-wrap span12" id='bt-bondeddevices-select'>
 																<option value="null">-select Device From List-</option>
 																<option value="+tronic SwissKnife">+tronic SwissKnife</option>
 																<option value="Ultra2 Glucometer">Ultra2 Glucometer</option>
 																<option value="3 Lead ECG">3 Lead ECG</option>
-																<option value="Weighing Scale">Weighing Scale</option>       	
-															</select>
-															<div><button id="selectval" class="btn green span6">ADD</button> <button id="delch" class="btn red span6" >Delete All</button> </div>
-																															<table id="readSuccess" class="table table-bordered  table-hover"><tr><th>Device Name</th><th>Device Address</th><th>Device Type</th><th> </th></tr>
-</table>		
+																<option value="Weighing Scale">Weighing Scale</option>    	
+															</select>-->
+															<br><div><button id="selectval" class="btn green span6">ADD</button> <button id="delch" class="btn red span6" >Delete All</button> </div>
+															<table id="readSuccess" class="table table-bordered  table-hover"><tr><th>Device Name</th><th>Device Address</th><th> </th></tr>
+															</table>		
 														
 												
 
@@ -97,7 +97,93 @@
 													
 
 											</div>											
-											</div>				
+											</div>		
+											
+										<div><button id="server_settings" class="btn grey span6">Server Settings</button> <button id="key_settings" class="btn label-info span6" >Key Settings</button> </div>
+									<br>
+									<div class="portlet box blue hide" id="key_hs">
+										<div class="portlet-title">
+											<div class="caption"><i class="icon-reorder"></i>Key Settings</div>
+											<div class="tools">
+												<a href="javascript:;" class="collapse"></a>
+												<a href="#portlet-config" data-toggle="modal" class="config"></a>
+												<a href="javascript:;" class="reload"></a>
+												<a href="javascript:;" class="remove"></a>
+											</div>
+										</div>
+											<div class="portlet-body form">
+												<div class="row-fluid">
+													<div class="span12 ">
+
+													<div><button id="add_server" class="btn green span6">ADD KEY</button><button id="conf_server" class="btn yellow span6">Configuration </button></div>
+															
+															<div class="hide" id="confser">
+															<table width="100%"><tr><td class="span8"><select id='serv_sel' class="m-wrap span12 "></select></td>
+															<td class="span4"><button id="add_serv" class="btn green span12">ADD</button></td></tr></table>
+															</div>
+															<br>
+															<div id="readserver" class="span6"><table id="sreadserver" class="table table-bordered  table-hover"><tr><th>Server URL</th><th> </th></tr>
+															
+															</table></div>	
+															
+															         <br><div id="addpart" class="hide"><input type="text" class="span12" id="url_server" placeholder="Service key" />
+															            
+															            
+															<div><button id="add_url" class="btn green span12">ADD</button></div>	</div>						
+															
+																
+														
+												
+
+														</div>
+													
+													</div>
+													
+
+											</div>											
+											</div>
+											
+											<div class="portlet box blue hide" id="server_hs">
+										<div class="portlet-title">
+											<div class="caption"><i class="icon-reorder"></i>Server Settings</div>
+											<div class="tools">
+												<a href="javascript:;" class="collapse"></a>
+												<a href="#portlet-config" data-toggle="modal" class="config"></a>
+												<a href="javascript:;" class="reload"></a>
+												<a href="javascript:;" class="remove"></a>
+											</div>
+										</div>
+											<div class="portlet-body form">
+												<div class="row-fluid">
+													<div class="span12 ">
+
+													<div><button id="add_server1" class="btn green span6">ADD SERVER</button><button id="conf_server1" class="btn yellow span6">Configuration </button></div>
+															
+															<div class="hide" id="confser1">
+															<table width="100%"><tr><td class="span8"><select id='serv_sel1' class="m-wrap span12 "></select></td>
+															<td class="span4"><button id="add_serv1" class="btn green span12">ADD</button></td></tr></table>
+															</div>
+															<br>
+															<div id="readserver1" class="span6"><table id="sreadserver1" class="table table-bordered  table-hover"><tr><th>Server URL</th><th> </th></tr>
+															
+															</table></div>	
+															
+															         <br><div id="addpart1" class="hide"><input type="text" class="span12" id="url_server1" placeholder="Server URL" />
+															            
+															            
+															<div><button id="add_url1" class="btn green span12">ADD</button></div>	</div>						
+															
+																
+														
+												
+
+														</div>
+													
+													</div>
+													
+
+											</div>											
+											</div>
 				
 				</div>
 				<div id="searchResult" class="hide"> searchResult Coming here... </div>

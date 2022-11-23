@@ -8,7 +8,9 @@
    	 var dtype='';
 	 var headerVal=1;
 	 var ecgFilePath = '';
+	 var validECG=0;
 	 var stethFilePath = '';
+	 var valFilePath = '';
 	 var newreg;
 	 var parentDir;
 	 var torchval;
@@ -30,8 +32,10 @@
 	 var serusername;
 	 var serpassword;
 	 var newpassword;
-	
-
+	var patID;
+	var srad;
+	var srads;
+	 
 	var url = "http://w3schools.com/webservices/tempconvert.asmx";
  /*
 	 var newurl = "http://www.clinic2care.com/axis2/services/PatientsWs";
@@ -51,21 +55,30 @@
 
 	function onDeviceReady()
 	{
+		
        	db = window.openDatabase("EMRDB", "1.0", "Patient Database", 200000);
         db.transaction(initializeDB, errorCB, successCB);
 	db.transaction(selectTB, errorCB, successTBS);
+	db.transaction(selTB, errorCB, successTBS);
+	db.transaction(selTB1, errorCB, successTBS);
+	//db.transaction(selectserv, errorCB, successTBS);
+	
+	
+	//selectready();
 	db.transaction(selectserver, errorserver, successserver);
 
         window.plugins = {
        		BluetoothPlugin: cordova.require( 'cordova/plugin/bluetooth' )
         };
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+	//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess1, fail);
          enableBT();
 	 pictureSource=navigator.camera.PictureSourceType;
          destinationType=navigator.camera.DestinationType;
-
+         window.SocialShare = new SocialShare(); 
         }
-
+	
+	
         function capturePhoto() {
       // Take picture using device camera and retrieve image as base64-encoded string
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI});
@@ -233,6 +246,8 @@ if($.mobile.activePage.is('#mainpage')){
 	}
 
 	var devicetodelete='';
+	var servertodelete='';
+	var sservertodelete='';
 
 	function delval()
 	{
@@ -241,6 +256,14 @@ if($.mobile.activePage.is('#mainpage')){
 	function delvalSelected()
 	{
 		db.transaction(deleteTV, errorCB, successTBS);
+	}
+	function delserSelected()
+	{
+		db.transaction(sdeleteTV, errorCB, successTBS);
+	}
+	function delserSelected1()
+	{
+		db.transaction(sdeleteTV1, errorCB, successTBS);
 	}
 	$(function(){
 		// $(".chk").click(function (){alert('clicked');});
@@ -254,6 +277,41 @@ if($.mobile.activePage.is('#mainpage')){
 		  //alert (devicetodelete);
 		  $(this).closest('tr').remove();
 		  delvalSelected();
+		  }
+		else{}
+
+
+	});
+	
+	$(".del").live("click", function(){
+	//alert("d");
+		servertodelete='';
+		servertodelete = $(this).parent().siblings(":first").text();
+		//alert(servertodelete);
+		var r=confirm("Delete a "+servertodelete+" URL!");
+		if (r==true)
+		  {
+
+		 // alert (servertodelete);
+		  $(this).closest('tr').remove(); 
+		  delserSelected();
+		  }
+		else{}
+
+
+	});
+	$(".del1").live("click", function(){
+	//alert("d");
+		sservertodelete='';
+		sservertodelete = $(this).parent().siblings(":first").text();
+		//alert(servertodelete);
+		var r=confirm("Delete a "+sservertodelete+" URL!");
+		if (r==true)
+		  {
+
+		 // alert (servertodelete);
+		  $(this).closest('tr').remove(); 
+		  delserSelected1();
 		  }
 		else{}
 
@@ -813,13 +871,471 @@ function NewReg()
 
 	$("#discoverBT").click(function (){discoverDevices();});
 	
+	
+	
+
+	$("#stop").click(function(){
+	//alert("sse");
+	
+	btnclicked=0;
+	dtype = 'q';
+				divi = "+";
+				//$("#stethOrange").show(); $("#dissth").show();
+				//$("#stethspinner").show();
+				//$("#stethGreen").hide(); 
+				//$("#audiosh").hide();
+				//$("#stethRed").hide();
+				db.transaction(calltronic, errorsteth, stethsuccess);
+	});
+	
+	/*$('#whatsapp').click(function(){
+        //alert("hi");
+        var name="pulse="+"subash";
+        var msg="bp="+"subash";
+        var res = name +","+ msg;
+        
+        
+        $('#cmnpinner').show();
+         var eid =$("#empId").val();
+         var valueId =$("#uid").val();
+         var pulse ="0";
+       var temp ="0";
+       var bpValue ="0";
+       //bpValue = "0";
+       var wscaltb="0";
+       wscaltb = $("#wscalval").val();
+       if(wscaltb)
+        wscaltb = $("#wscalval").val(); else wscaltb = 0;
 
 
+         if ( $("#sys").val() != "null")
+             bpValue = $("#sys").val() + '/' + $("#dia").val();
+
+         var glucoVal="0";
+         glucoVal = $("#gluco").val();
+             if(glucoVal)
+             glucoVal = $("#gluco").val();  else glucoVal = 0;
+
+         pulse = $("#pulse2").val();
+         if(pulse)
+             pulse = $("#pulse2").val();   else pulse = 0;
+         temp = $("#therm").val();
+         if(temp)
+             temp = $("#therm").val();   else temp = 0;
+         var spo2 ="0";
+
+         if($("#spo22").val()) spo2 = $("#spo22").val(); else spo2 = 0;
+
+         var ptComplaint = "0";
+         ptComplaint = $("#PtComplaint").val();
+         if(ptComplaint)
+             ptComplaint = $("#PtComplaint").val();   else ptComplaint = 0;
+         
+         var d=new Date();
+         var dat=d.getDate();
+
+         var mon=d.getMonth()+1;
+         var year=d.getFullYear();
+         var todayDate = dat+"-"+mon+"-"+year;
+         
+         var currtime;
+         var currhour;
+         var currminute;
+         var currsecond;
+         var AP;
+
+         currtime = new Date();
+         currhour = currtime.getHours();
+         currminute = currtime.getMinutes();
+         currsecond = currtime.getSeconds();
+
+         if (currminute < 10)
+             currminute = "0" + currminute;
+
+         if (currsecond < 10)
+             currsecond = "0" + currsecond;
+
+         AP = (currhour >= 12 ? "PM" : "AM");
 
 
-	$("#bpSend").click(function(){
+         if (currhour > 12)
+             currhour -= 12;
+         else if(currhour == 0)
+             currhour = 12;
 
-			console.log( 'BP Send Clicked' );
+         var chdate = currhour + ":" + currminute + ":" + currsecond + " " + AP;
+            // document.write(chdate);
+
+         //alert("inside");
+        
+  		 var patID = $('#FindId').val();
+         var pul = pulse;
+        var tmp = temp;
+         var bpv = bpValue;
+         var spo = spo2;
+         var gluc = glucoVal;
+         
+         var tdte = todayDate;
+         var cdte = chdate;
+   
+         var data="Patient Name="+patID+","
+         +"%0Apulse="+pul+","
+         +"%0ATemperature="+tmp+","
+         +"%0ABP="+bpv+","
+         +"%0ASpo2="+spo+","
+         +"%0AGlucose="+gluc+","
+         +"%0ACheckupDate="+tdte+""+cdte;
+         
+      
+        var whatsapp_url = "whatsapp://send?text="+data;
+        window.location.href=whatsapp_url;
+       
+    });*/
+    
+    var newurl ="http://www.greenocean.in/service/user.php"
+	
+	
+			function gotFileEntry1(fileEntry) 
+			{
+                fileObject = fileEntry;
+                fileEntry.file(gotvalFile, failFileEntry);
+                $('#saveFile_btn').trigger('click'); 
+            }
+            
+            function gotvalFile(file)
+            {
+				valFilePath = file.fullPath;
+		
+			}
+            $("#saveFile_btn").click(function(){
+            
+                   
+                   fileObject.createWriter(gotFileWriter1, fail);
+               
+            });
+ 
+
+            var ecgcurr;
+            function gotFileWriter1(writer) 
+            {
+            	var p_data = valFilePath;
+          		var eid	=$("#empId").val();
+				var valueId =$("#uid").val();
+				var pulse ="0";
+      			var temp ="0";
+      			var bpValue ="0";
+      			bpValue = "null";
+      			
+      		
+
+        		if (( $("#sys").val() != "null")&&( $("#sys").val() != ""))
+        		{
+        		
+           	 		bpValue = $("#sys").val()+'/'+$("#dia").val(); 
+           	 		}
+           	 		else
+           	 		{ bpValue="NA";
+           	 		}
+           	 		
+
+        		var glucoVal="0";
+        		glucoVal = $("#gluco").val();
+            	if(glucoVal)
+            		glucoVal = $("#gluco").val();  else glucoVal = "NA";
+
+        		pulse = $("#pulse2").val();
+        		if(pulse)
+            		pulse = $("#pulse2").val();   else pulse = "NA";
+            		
+        		temp = $("#therm").val();
+        		if(temp)
+            		temp = $("#therm").val();   else temp = "NA";
+            		
+        		var spo2 ="0";
+
+        			if($("#spo22").val()) spo2 = $("#spo22").val(); else spo2 = "NA";
+
+        		var ptComplaint = "0";
+        		ptComplaint = $("#PtComplaint").val();
+        		if(ptComplaint)
+            		ptComplaint = $("#PtComplaint").val();   else ptComplaint = 0;
+        
+        		var d=new Date();
+        		var dat=d.getDate();
+
+        		var mon=d.getMonth()+1;
+        		var year=d.getFullYear();
+        		var todayDate = dat+"-"+mon+"-"+year;
+        
+        		var currtime;
+        		var currhour;
+        		var currminute;
+        		var currsecond;
+       			var AP;
+
+        		currtime = new Date();
+        		currhour = currtime.getHours();
+        		currminute = currtime.getMinutes();
+        		currsecond = currtime.getSeconds();
+
+        		if (currminute < 10)
+            		currminute = "0" + currminute;
+
+        		if (currsecond < 10)
+            		currsecond = "0" + currsecond;
+
+        		AP = (currhour >= 12 ? "PM" : "AM");
+
+
+        		if (currhour > 12)
+            		currhour -= 12;
+        		else if(currhour == 0)
+            		currhour = 12;
+
+        		var chdate = currhour + ":" + currminute + ":" + currsecond + " " + AP;
+				patID = $('#FindId').val();
+				//alert(patID);
+				var data = new Array();
+        		data[0] = "Pulse:"+pulse;
+        		data[1] = "Temp:"+temp;
+        		data[2] = "BpValue:"+bpValue;
+        		data[3] = "Spo2:"+spo2;
+        		data[4] = "GlucoVal:"+glucoVal;
+        
+	
+                
+                writer.write(data);
+                
+                var options = new FileUploadOptions();
+			
+        		options.fileKey="file1";
+    			var todaysDate=new Date();
+				var curr_date = todaysDate.getDate();
+				var curr_month = todaysDate.getMonth()+1;
+       			var curr_year = todaysDate.getFullYear();
+       			var curr_hour = todaysDate.getHours();
+       			var curr_min = todaysDate.getMinutes();
+				var valdate = curr_year + '' + curr_month + '' + curr_date + '' + curr_hour + '' + curr_min;
+				//var valdate = curr_year + '-' + curr_month + '-' + curr_date ;
+        		options.fileName= patID + '_' + valdate  + '_' +  p_data.substr(p_data.lastIndexOf('/')+1);
+      			console.log("Renamed File Name: " + options.fileName);
+        		options.mimeType="text/plain";
+        		
+        		//ecgcurr=p_data.replace("readval.txt","");
+            
+          //  var old =p_data.substr(p_data.lastIndexOf('/')+1);
+           // var news = options.fileName;
+            //curr='/storage/emulated/0/prago/';
+            //curfile=curr+news;
+            //alert(curfile);
+           // ecgrenameFile(old ,ecgcurr,news, ecgrenameSuccess,ecgrenameFail);
+            
+        if((srad==null)||(srad==""))
+        {
+        		var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+				//params.servicekey = srad;
+        }
+        else
+        {
+        		var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+					params.servicekey = srad;
+        
+        }
+         		/*var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+					params.servicekey = srad;*/
+          		options.params = params;
+          
+        		options.chunkedMode = false;
+        		console.log("File Upload..");
+		
+				if (checkConnection() == 'No network connection')
+				{
+
+					closeRfcomm();
+					alert ('No network connection');
+				}
+				else
+				{
+					
+				
+				var ft = new FileTransfer();
+				//ft.upload(p_data, "http://greenocean.in/cpclplus/uploadwav.php", DataUploadSuccess, datauploadfail, options);
+				//ft.upload(p_data, "https://asha.healthkon.com/serviceUpload?type=upload", DataUploadSuccess, datauploadfail, options);
+	ft.upload(p_data, srads+"?type=upload", DataUploadSuccess, datauploadfail, options);
+         		} 
+      		}
+          /*  function ecgrenameFile(currentName, currentDir, newName, successFunction,ecgrenameFail) {
+	
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+
+        fileSystem.root.getFile(currentDir + currentName, null, function (fileEntry) {
+            fileSystem.root.getDirectory(currentDir, {create: true}, function (dirEntry) {
+                parentEntry = new DirectoryEntry(currentName, currentDir + currentName);
+
+                fileEntry.moveTo(dirEntry, newName, function () {
+
+                    successFunction();
+
+                }, ecgrenameFail);
+            }, ecgrenameFail);
+        }, ecgrenameFail);
+
+    }, ecgrenameFail);
+}
+function ecgrenameSuccess(r) {
+   
+   
+    alert('Success');
+}
+
+function ecgrenameFail(r) {
+    alert('failed'+r.response);
+}*/
+
+
+    		$("#bpSend").click(function()
+    		{
+				//alert(srads);
+				var patID = $('#FindId').val();
+    		if(patID != ""){
+				var pulse ="0";
+      var temp ="0";
+      var bpValue ="0";
+      bpValue = "null";
+      var wscaltb="0";
+      wscaltb = $("#wscalval").val();
+      if(wscaltb)
+       wscaltb = $("#wscalval").val(); else wscaltb = 0;
+
+
+        if ( $("#sys").val() != "null")
+            bpValue = $("#sys").val() + '/' + $("#dia").val();
+
+        var glucoVal="0";
+        glucoVal = $("#gluco").val();
+            if(glucoVal)
+            glucoVal = $("#gluco").val();  else glucoVal = 0;
+
+        pulse = $("#pulse2").val();
+        if(pulse)
+            pulse = $("#pulse2").val();   else pulse = 0;
+        temp = $("#therm").val();
+        if(temp)
+            temp = $("#therm").val();   else temp = 0;
+        var spo2 ="0";
+
+        if($("#spo22").val()) spo2 = $("#spo22").val(); else spo2 = 0;
+
+        var ptComplaint = "0";
+        ptComplaint = $("#PtComplaint").val();
+        if(ptComplaint)
+            ptComplaint = $("#PtComplaint").val();   else ptComplaint = 0;
+        
+        var d=new Date();
+        var dat=d.getDate();
+
+        var mon=d.getMonth()+1;
+        var year=d.getFullYear();
+        var todayDate = dat+"-"+mon+"-"+year;
+        
+        var currtime;
+        var currhour;
+        var currminute;
+        var currsecond;
+        var AP;
+
+        currtime = new Date();
+        currhour = currtime.getHours();
+        currminute = currtime.getMinutes();
+        currsecond = currtime.getSeconds();
+
+        if (currminute < 10)
+            currminute = "0" + currminute;
+
+        if (currsecond < 10)
+            currsecond = "0" + currsecond;
+
+        AP = (currhour >= 12 ? "PM" : "AM");
+
+
+        if (currhour > 12)
+            currhour -= 12;
+        else if(currhour == 0)
+            currhour = 12;
+
+        var chdate = currhour + ":" + currminute + ":" + currsecond + " " + AP;
+           // document.write(chdate);
+
+		
+     				
+        
+if ((pulse=="0") && (temp=="0") && (bpValue=="/") && (spo2=="0"))
+{
+	
+
+		$("#DevAll").trigger('click');
+		//parentDir.getFile("readval.txt", {create: true}, gotFileEntry1, failFileEntry);
+	exit;
+	  
+}    
+				parentDir.getFile("readval.txt", {create: true}, gotFileEntry1, failFileEntry);
+				}
+				else{
+				//$('#erperid').show();
+				alert ("Please Enter Patient Id!");
+				}
+			});
+	
+			function DataUploadSuccess(r)
+			{
+			alert("success,"+r.response);
+			
+			
+			var bb=JSON.parse(r.response);
+			
+			if(bb.status==true)
+			{
+				alert(bb.message);
+			}
+			else
+			{
+			var obj = jQuery.parseJSON(r.response);
+			 bb=JSON.parse(obj);
+			alert(bb.message);
+			}
+	
+			}
+			
+			function datauploadfail(r)
+			{
+			alert(r.response);
+	       		console.log(r);
+   	 		}
+	
+	/*$("#bpSend").click(function(){
+	
+	parentDir.getFile("readme1.txt", {create: true}, gotFileEntry1, failFileEntry);
+	
+	alert ("Uploading...");
+		var pl = new SOAPClientParameters();
+		
+//ecgbtreadsuccess();
+		//	console.log( 'BP Send Clicked' );
 			//HelloTo();
 		
 
@@ -907,6 +1423,18 @@ function NewReg()
         data[7] = ptComplaint;
         data[8] = todayDate;
         data[9] = chdate;
+     //   alert(data);
+     
+     				
+        
+if ((pulse=="0") && (temp=="0") && (bpValue=="/") && (spo2=="0"))
+{
+	
+
+		$("#DevAll").trigger('click');
+	exit;
+	  
+}    
         
        // var vitalBP=$("#PreBP").val();
 
@@ -926,8 +1454,10 @@ function NewReg()
 				alert(data.message);
 				}
 			});
+			
+			
 
-		});
+		});*/
 
 $('#ton').click(function () {
 
@@ -989,7 +1519,7 @@ torchoffslide();
 		divi = "+";
 		$("#bpmOrange").show(); $("#disbp").show();
 		$("#bpspinner").show();
-		$("#bpmValueReturn").hide();
+		$("#bpmValueReturn").hide(); $("#bpmValueReturn1").hide();
 		$("#bpmGreen").hide();
 		$("#bpmRed").hide();
 		db.transaction(calltronic, bperror, bpsuccess);
@@ -1020,10 +1550,10 @@ torchoffslide();
 	});
 	// steth S//
 
+
 	
-	
-	$("#steth").click(function (){
-		 var idav =  $('#validationid').val();
+	$("#start").click(function (){
+		 var idav =  $('#FindId').val();
 		
 if(idav){
 
@@ -1032,10 +1562,11 @@ if(idav){
 				btnclicked=0;
 				dtype = 's';
 				divi = "+";
-				$("#stethOrange").show(); $("#dissth").show();
+				$(".stethOrange").show(); $(".dissth").show();
 				$("#stethspinner").show();
-				$("#stethGreen").hide(); $("#stethaud").hide();
-				$("#stethRed").hide();
+				$(".stethGreen").hide(); $(".audiosh").hide();
+				$(".stethRed").hide();
+				
 				db.transaction(calltronic, errorsteth, stethsuccess);
 			}
 			else 
@@ -1057,8 +1588,8 @@ $('#erperid').show();
 	if(btnclicked)
 	{
 	btnclicked=0;
-	var ptid = $("#uid").val();
-	if (ptid=='Enter Id' )
+	var ptid = $("#FindId").val();
+	if (ptid=='' )
 	{
 		alert ("Please Enter Patient Id!");
 		$("#ecgOrange").hide();
@@ -1069,7 +1600,15 @@ $('#erperid').show();
 	}
 	else
 	{
-		db.transaction(callecg, ecgerror, ecgsuccess);
+		//db.transaction(callecg, ecgerror, ecgsuccess);
+	    dtype = 'e';
+	    divi = "ec";
+	    $("#ecgOrange").show();
+	    $("#ecgspinner").show();
+	    $("#ecgGreen").hide();
+
+	    $("#ecgRed").hide();
+	    db.transaction(calltronic, errorsteth, stethsuccess);
 	}
 	}else alert("Please Wait Now Another Processing...");
 	});
@@ -1079,14 +1618,17 @@ $('#erperid').show();
 		if(btnclicked)
 		{
 		btnclicked=0;
+	
 		$("#glucometerOrange").show();
 		$("#glucospinner").show();
 		$("#glucoValueReturn").hide();
 		$("#glucometerGreen").hide();
 		$("#glucometerRed").hide();
 		dtype = 'g';
-		divi = "gu";
-		db.transaction(callgluco, glucometererror, glucometersuccess);
+		//divi = "gu";
+		divi = "+";
+		//db.transaction(callgluco, glucometererror, glucometersuccess);
+		db.transaction(calltronic, errorsteth, stethsuccess);
 		}else alert("Please Wait Now Another Processing...");
 
 	});
@@ -1222,7 +1764,7 @@ $('#erperid').show();
 
 	function calltronic(tx, results)
 	{
-		tx.executeSql('SELECT * FROM Bluevalue where devtype="+tronic SwissKnife"', [], getselect, errorCB);
+		tx.executeSql('SELECT * FROM Bluevalue', [], getselect, errorCB);
 	}
 
 
@@ -1252,7 +1794,7 @@ $('#erperid').show();
 		$("#torchOrange").hide();
 		$("#torchGreen").show();
 		$("#torchRed").hide();
-		$("#trchimg").attr("src","images/torchon.png");
+		$("#trchimg").attr("src","images/torch.png");
 	db.transaction(calltronic, torcherror, torchsuccess);
 
 	}
@@ -1264,10 +1806,10 @@ $('#erperid').show();
 		divi = "+";
 		$("#torchOrange").hide();
 		$("#torchGreen").hide();
-		$("#torchRed").show(); $("#trchimg").attr("src","images/torchof.png");
+		$("#torchRed").show(); $("#trchimg").attr("src","images/torch.png");
 		$('#ton').val('Off');
 		//writeRfcomm('x');
-		$("#trchimg").attr("src","images/torchof.png");
+		$("#trchimg").attr("src","images/torch.png");
 		db.transaction(calltronic, torcherror, torchsuccess);
 
 	}
@@ -1281,8 +1823,9 @@ $('#erperid').show();
 
 	function getselect(tx, results)
 	{
+	
 		var tablen = results.rows.length;
-
+			//alert(tablen);
 		if(tablen==0)
 		{
 			switch (dtype)
@@ -1295,12 +1838,12 @@ $('#erperid').show();
 					case 'e' : 	alert("Please Connect Device On Settings Menu... ");
 							$('#ecgspinner').hide(); $("#ecgRed").show(); $("#ecgOrange").hide();break;
 					case 's' : 	alert("Please Connect Device On Settings Menu... ");
-						        $('#stethspinner').hide();$("#stethRed").show(); $("#stethOrange").hide(); $("#dissth").hide(); $("#stethGreen").hide(); $("#stethaud").hide();break;
+						        $('#stethspinner').hide();$("#stethRed").show(); $(".stethOrange").hide(); $(".dissth").hide(); $(".stethGreen").hide(); $(".audiosh").hide(); $("#start").show(); $("#stop").hide(); break;
 					case 't' : 	alert("Please Connect Device On Settings Menu...");
-							$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torchof.png"); $('#ton').val('Off');//.slider("refresh");
+							$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torch.png"); $('#ton').val('Off');//.slider("refresh");
 							$("#torchOrange").hide();$("#torchGreen").hide();break;
 					case 'x' :	alert("Please Connect Device On Settings Menu... ");
-							$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torchof.png"); $('#ton').val('Off');//.slider("refresh");
+							$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torch.png"); $('#ton').val('Off');//.slider("refresh");
 							$("#torchOrange").hide();$("#torchGreen").hide();break;
 					case 'b' :	alert("Please Connect Device On Settings Menu...");
 							$('#bpspinner').hide();$("#bpmRed").show(); $("#bpmOrange").hide(); $("#disbp").hide();break;
@@ -1320,6 +1863,7 @@ $('#erperid').show();
 
 				//alert($('#resvaldiisp').text());
 				var tempclickval= $('#resvaldiisp').text();
+				
 			}
 			openRfcomm();
 		}
@@ -1335,7 +1879,12 @@ $('#erperid').show();
  	   	$('#bt-devices-select').append( $( '<option value="null">-select Device From List-</option>' ) );
  	   	for( var i = 0; i < devices.length; i++ )
 		 {
- 	   		$('#bt-devices-select').append( $( '<option value="' + devices[i].address + '">' + devices[i].name + '</option>' ) );
+		 
+				if(( devices[i].name.startsWith('Dual-SPP')) || (devices[i].name.startsWith('RNBT') )) {
+				
+ 	   		$('#bt-devices-select').append( $( '<option value="' + devices[i].address + '">' + devices[i].address+ '</option>' ) );
+ 	      	 }
+ 	      	 
  	      	 }
 
 	    }, 	function(error) { alert( 'Error during Discovery'); 
@@ -1346,6 +1895,7 @@ $("#bt-devices-select").hide();
   	  }
 	function writeRfcomm(data)
          {
+       //  alert("writeRfcomm"+data);
 		$('#bt-data-dump').html( '');
 		window.plugins.BluetoothPlugin.write( bp_writeSuccess, bp_writeError, g_socketid,data );
 	 }
@@ -1353,6 +1903,7 @@ $("#bt-devices-select").hide();
 	function bp_writeSuccess( p_data )
 	 {
 	 	// Continue reading...
+	 	//alert("bp_writeSuccess"+p_data);
 	 	window.plugins.BluetoothPlugin.read( bp_readSuccess, bp_readError, g_socketid );
 		return;
 	}
@@ -1425,7 +1976,14 @@ $("#bt-devices-select").hide();
 	function initializeDB(tx)
 	{
     	//tx.executeSql('DROP TABLE IF EXISTS Bluevalue');
-          tx.executeSql('CREATE TABLE IF NOT EXISTS Bluevalue (id unique ,dname unique ,daddress unique , devtype unique)');
+          //tx.executeSql('CREATE TABLE IF NOT EXISTS Bluevalue (id unique ,dname unique ,daddress unique , devtype unique)');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS Bluevalue (id unique ,dname unique ,daddress unique)');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS servval (id unique ,saddress unique)');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS insservval (id unique ,saddress unique)');
+          
+          tx.executeSql('CREATE TABLE IF NOT EXISTS sservval (id unique ,saddress unique)');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS sinsservval (id unique ,saddress unique)');
+          
 	 // tx.executeSql('DROP TABLE IF EXISTS user');
 	  tx.executeSql('CREATE TABLE IF NOT EXISTS user (username unique , password, id)');
 	  tx.executeSql('CREATE TABLE IF NOT EXISTS userid (uid)');
@@ -1496,9 +2054,9 @@ $("#bt-devices-select").hide();
 	   var devaddress = $("#bt-devices-select").val();
 	   var devname = $("#bt-devices-select option:selected").text();
 	   //var devna = 1;
-           var devtype = $("#bt-bondeddevices-select").val();
-	   if((devname!="-select Device From List-")&&(devaddress!="null")&&(devtype!="null"))
-	   tx.executeSql('INSERT INTO Bluevalue (dname , daddress,devtype) VALUES ("' +devname+'","'+devaddress+'","'+devtype+'")');
+           //var devtype = $("#bt-bondeddevices-select").val();
+	   if((devname!="-select Device From List-")&&(devaddress!="null"))
+	   tx.executeSql('INSERT INTO Bluevalue (dname , daddress) VALUES ("' +devname+'","'+devaddress+'")');
 	   else
 		alert("Empty Value Not Allowed !");
 	}
@@ -1575,6 +2133,18 @@ function selectserver(tx)
 	function deleteTV(tx)
 	{
 	 tx.executeSql('DELETE FROM Bluevalue where dname="'+devicetodelete+'"', [], delval1, errorCB);
+         //console.log('SELECT * FROM Bluevalue');
+	}
+	function sdeleteTV(tx)
+	{
+	//alert(""HI"+servertodelete);
+	 tx.executeSql('DELETE FROM insservval where saddress="'+servertodelete+'"', [], delval1, errorCB);
+         //console.log('SELECT * FROM Bluevalue');
+	}
+	function sdeleteTV1(tx)
+	{
+	//alert(""HI"+servertodelete);
+	 tx.executeSql('DELETE FROM sinsservval where saddress="'+sservertodelete+'"', [], delval1, errorCB);
          //console.log('SELECT * FROM Bluevalue');
 	}
 	function deleteAll(tx)
@@ -1667,11 +2237,11 @@ function selectserver(tx)
 	  else
 	  	$('#readSuccess1').html("");
 	  $('#readSuccess').append("<table border>");
-	  $('#readSuccess').html("<th>Device Name</th><th>Device Address</th><th>Device Type</th><th> </th>");
+	  $('#readSuccess').html("<th>Device Name</th><th>Device Address</th><th> </th>");
     	  for (var i=0;i<len; i++)
 	    {
 
-         $('#readSuccess').append("<tr><td>"+results.rows.item(i).dname+"</td><td>"+ results.rows.item(i).daddress +"</td><td>"+ results.rows.item(i).devtype +"</td><td alidn='center'><a href='#' class='del_ExpenseRow'><img src='images/delete.png' border='0' width='40' height='40' class='textmiddle' ></img></a></td></tr>");
+         $('#readSuccess').append("<tr><td>"+results.rows.item(i).dname+"</td><td>"+ results.rows.item(i).daddress +"</td><td alidn='center'><a href='#' class='del_ExpenseRow'><img src='images/delete.png' border='0' width='40' height='40' class='textmiddle' ></img></a></td></tr>");
 	//   $('#readSuccess').append("Row = " + i + " name = " + results.rows.item(i).dname + " address =  " + results.rows.item(i).daddress);
 
 
@@ -1684,15 +2254,19 @@ function selectserver(tx)
 	function bp_readSuccess( p_data ) {
 	if (p_data == "Timeout")
 	{
+	//alert("no"+p_data);
 		alert("Unable to continue communication with device");
 		closeRfcomm();
 	}
 	else
 	{
+	//alert(p_data);
 		var getVal = new Array();
 		getVal = p_data.split(/,|\s|_/);
 		var deg = 248;
-		//alert(p_data[0]);
+		//alert(getVal[0]);
+		//alert(getVal[1]);
+		//alert(dtype);
 		//$('#bt-data-dump').html('<br><b>'+getVal[0]+'</b>' );
 		switch (getVal[0])
 		{
@@ -1721,13 +2295,14 @@ function selectserver(tx)
 						case 'e' : 	alert(errordisplay);
 								$('#ecgspinner').hide(); $("#ecgRed").show(); $("#ecgOrange").hide();break;
 						case 's' : 	alert(errordisplay);
-							        $('#stethspinner').hide();$("#stethRed").show(); $("#stethOrange").hide(); $("#dissth").hide();$("#stethGreen").hide(); $("#stethaud").hide();break;
+							        $('#stethspinner').hide();$(".stethRed").show(); $(".stethOrange").hide(); $(".dissth").hide();$(".stethGreen").hide(); $(".audiosh").hide();$("#start").show(); $("#stop").hide(); 
+									break;
 						case 't' : 	alert(errordisplay);
-								$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torchof.png"); $("#torchOrange").hide();
+								$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torch.png"); $("#torchOrange").hide();
 								$('#ton').val('Off');//.slider("refresh");
 								break;
 						case 'x' :	alert(errordisplay);
-								$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torchof.png");
+								$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torch.png");
 								$("#torchOrange").hide();$('#ton').val('Off');//.slider("refresh");
 								break;
 						case 'b' :	alert(errordisplay);
@@ -1755,8 +2330,9 @@ function selectserver(tx)
 				//set all the values
 				$("#sys").val(getVal[8]);
 				   $("#dia").val(getVal[9]);
-				   $("#bpmValueReturn").html('SYS :'+$("#sys").val()+'<br>DIA :'+ $("#dia").val());
-				   $("#bpmValueReturn").show();
+				   $("#bpmValueReturn").html($("#sys").val()+" / "+$("#dia").val());
+				  //  $("#bpmValueReturn1").html('DIA :'+ $("#dia").val());
+				   $("#bpmValueReturn").show(); $("#bpmValueReturn1").show();
 				  	$("#spo22").val(getVal[6]);
 				   $("#pulse2").val(getVal[7]);
 				    $("#poxValueReturn").html('SpO2 :'+$("#spo22").val()+'%<br>Pulse :'+ $("#pulse2").val());
@@ -1766,7 +2342,7 @@ function selectserver(tx)
 				    
 				     $("#thermValueReturn").show();
 
-				//alert("device vlaue :"+getVal[1] + ' ' + getVal[2] +' ' + getVal[3] +' ' + getVal[4] +' ' + getVal[5] +' ' + getVal[6]);
+				//alert("device vlaue :"+getVal[1] + ' ' + getVal[2] +' ' + getVal[3] +' ' + getVal[4] +' ' + getVal[5] +' ' + getVal[6]+' ' + getVal[7]+' ' + getVal[8]+' ' + getVal[9]+' ' + getVal[10]);
 				window.plugins.BluetoothPlugin.read5( bp_readSuccess5, bp_readError, g_socketid );
 				}
 			           else
@@ -1782,8 +2358,9 @@ function selectserver(tx)
 			case 'B' : $("#sys").val(getVal[1]);
 				   $("#dia").val(getVal[2]);
 				  // $('#bpm-dump').show();
-				   $("#bpmValueReturn").html('SYS :'+$("#sys").val()+'<br>DIA :'+ $("#dia").val());
-				   $("#bpmValueReturn").show();
+				   $("#bpmValueReturn").html($("#sys").val()+" / "+$("#dia").val());
+				   // $("#bpmValueReturn1").html('DIA :'+ $("#dia").val());
+				   $("#bpmValueReturn").show(); $("#bpmValueReturn1").show();
 				   $("#bpspinner").hide();
 				   $("#bpmOrange").hide(); $("#disbp").hide();
 				   $("#bpmGreen").show();
@@ -1809,8 +2386,11 @@ function selectserver(tx)
 				btnclicked=1;
 				prediv = divi;
 				   break;
-			case 'T' : $("#thermValueReturn").html(getVal[3]+'&deg;F<br>'+ getVal[1]+'&deg;C');
-					$("#therm").val(getVal[3]);
+			case 'T' : 
+					var tem=(9*getVal[1]/5)+32;
+			    	tem=tem.toFixed(1);
+					$("#thermValueReturn").html(tem+'&deg;F<br>'+ getVal[1]+'&deg;C');
+					$("#therm").val(tem);
 				   //$('#therm-dump').show();
 	 			   $('#error-dump').hide();
 				   $('#bt-data-dump').hide();//&deg;F
@@ -1827,8 +2407,12 @@ function selectserver(tx)
 			//set all the values
 				$("#sys").val(getVal[5]);
 				   $("#dia").val(getVal[6]);
-				   $("#bpmValueReturn").html('SYS :'+$("#sys").val()+'<br>DIA :'+ $("#dia").val());
-				   $("#bpmValueReturn").show();
+				   $("#gluco").val(getVal[7]);
+				   $("#glucoValueReturn").html(getVal[7]+'mg/dl');
+				   $("#glucoValueReturn").show();
+				  $("#bpmValueReturn").html($("#sys").val()+" / "+$("#dia").val());
+				  //  $("#bpmValueReturn1").html('DIA :'+ $("#dia").val());
+				   $("#bpmValueReturn").show(); $("#bpmValueReturn1").show();
 				  	$("#spo22").val(getVal[3]);
 				   $("#pulse2").val(getVal[4]);
 				    $("#poxValueReturn").html('SpO2 :'+$("#spo22").val()+'%<br>Pulse :'+ $("#pulse2").val());
@@ -1839,8 +2423,21 @@ function selectserver(tx)
 				     $("#thermValueReturn").show();
 
 				//alert("device vlaue :"+getVal[1] + ' ' + getVal[2] +' ' + getVal[3] +' ' + getVal[4] +' ' + getVal[5] +' ' + getVal[6]);
+				$("#bpSend").trigger('click');
 				window.plugins.BluetoothPlugin.read5( bp_readSuccess5, bp_readError, g_socketid );
+				
 				break;
+				
+				case 'G' : 
+						$("#glucoValueReturn").html(getVal[1]+"mg/dl");
+						$("#gluco").val(getVal[1]);
+						$("#glucometerOrange").hide();
+						$("#glucospinner").hide();
+						$("#glucoValueReturn").show();
+						$("#glucometerGreen").show();
+						btnclicked=1;
+						prediv = divi;
+				   		break;
 
 			case 'P' : if (headerVal==1)
 					{
@@ -1873,10 +2470,13 @@ function selectserver(tx)
 
 		//$('#bt-data-dump').html( 'Measuring ECG...');
 		//$('#ecgspinner').show();
+		
 		//$('#bt-data-dump').show();
+		
+		$('#chartdiv').hide();
 		$('#chart1').hide();
 		$('#chart2').hide();
-		//$('#chart3').hide();
+		$('#chart3').hide();
 		$('#error-dump').hide();
 		dataCnt = 0;
 		getPlotVal='';
@@ -1888,9 +2488,25 @@ function selectserver(tx)
 
 
 	function writeSteth(data) {
-		//$('#bt-data-dump').html( 'Streaming Steth...');
+	
+	
+		
 		$('#stethspinner').show();
-		//$('#bt-data-dump').show();
+		$('#start').hide();
+		$('#stop').show();
+		
+		window.plugins.BluetoothPlugin.write( bp_writeSuccess33, bp_writeError, g_socketid,data );
+	}
+	function bp_writeSuccess33(){
+	
+	//alert("start");
+	btnclicked=1;
+	prediv = divi;
+	}
+	function writeSteths(data) {
+	
+		$('#stethspinner').show();
+		
 		$('#error-dump').hide();
 		window.plugins.BluetoothPlugin.write( bp_writeSuccess3, bp_writeError, g_socketid,data );
 	}
@@ -1929,6 +2545,39 @@ function selectserver(tx)
         dir.getDirectory("prago", {create : true , exclusive : false},successCr,fail);
 
     }
+    
+    /* function onFileSystemSuccess1(fileSystem) {
+     
+     //dir.getDirectory("prago", {create : true , exclusive : false},successCr,fail);
+     //parentDir.getFile("ecg.txt", {create: true}, gotEcgFileEntry, failFileEntry);
+              fileSystem.root.getFile("readme.txt",
+                {create: true, exclusive: false},
+                gotFileEntry1, fail);
+              }
+         	function gotFileEntry1(fileEntry) {
+                fileObject = fileEntry;
+                $('#saveFile_btn').on('click', function() {
+                    saveFileContent1();
+                });
+            }*/
+ 
+/*function saveFileContent1() {
+                fileObject.createWriter(gotFileWriter1, fail);
+            }
+            
+            function gotFileWriter1(writer) {
+                var myText = document.getElementById('my_text').value;
+                writer.write(myText);
+                writer.onwriteend = function(evt) {
+                $('#message').html('<p>File contents have been written.<br /><strong>File path:</strong> ' + fileObject.fullPath + '</p>');
+                    var reader = new FileReader();
+                    reader.readAsText(fileObject);
+                    reader.onload = function(evt) {
+                        $('#contents').html('<strong>File contents:</strong> <br />'
+                            + evt.target.result);
+                    };
+                };
+            }*/
 
 	function successCr(dir)
 	{
@@ -1940,11 +2589,22 @@ function selectserver(tx)
 
 
 	}
+	/*function successCr1(dir)
+	{
+		parentDir = dir;
+
+        console.log("Parent Dir: " + parentDir.fullPath);
+       // createThumbNails();
+       // dir.getDirectory("KVideos", {create : true , exclusive : false},gotFS,fail);
+
+
+	}*/
      	function fail(evt) {
         	console.log(evt.target.error.code);
    	}
 	function ecgbtreadsuccess()
 	{
+		
 		parentDir.getFile("ecg.txt", {create: true}, gotEcgFileEntry, failFileEntry);
 		//bp_readSuccess2();
 	}
@@ -1956,17 +2616,21 @@ function selectserver(tx)
 	function gotEcgFile(file){
 		//readAsText(file);
 		ecgFilePath = file.fullPath;
+		//alert(ecgFilePath);
 		console.log(ecgFilePath);
        		readAsText(file);
+       	if(validECG)	gotFileWriter();
 	}
 	function gotFileWriter() {
+	patID = $('#FindId').val();
+	//alert("upload"+","+ecgFilePath);
  	console.log('File Upload');
         var ptid = $("#uid").val();
 	//var p_data = "file:///mnt/sdcard/prago/ecg.txt";
 	 var p_data = ecgFilePath;
        	var options = new FileUploadOptions();
 
-        options.fileKey="file1";
+        options.fileKey="file3";
     	var todaysDate=new Date();
 	var curr_date = todaysDate.getDate();
 	var curr_month = todaysDate.getMonth();
@@ -1978,6 +2642,35 @@ function selectserver(tx)
         options.fileName= ptid + '_' + ecgdate  + '_' +  p_data.substr(p_data.lastIndexOf('/')+1);
       	console.log("Renamed ECG File Name: " + options.fileName);
         options.mimeType="text/plain";
+        if((srad==null)||(srad==""))
+        {
+        		var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+				//params.servicekey = srad;
+        }
+        else
+        {
+        		var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+					params.servicekey = srad;
+        
+        }
+        /*var params = new Object();
+          params.username = "AGBHealth@Agrowbook.com";
+          params.password = "9aafd69f056934ec737ffed3ed01d055";
+          params.token = "cc2bdc44f36eec08c089e823572333bc";
+          params.patientId = patID;
+         // params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+			params.servicekey = srad;*/
+          options.params = params;
         options.chunkedMode = false;
         console.log("File Upload..");
 	if (checkConnection() == 'No network connection')
@@ -1987,32 +2680,36 @@ function selectserver(tx)
 		$("#ecgRed").show();
 		$("#ecgGreen").hide();
 		$("#ecgspinner").hide();
-		closeRfcomm();
 		alert ('No network connection');
+		closeRfcomm();
+		
 	}
 	else
 	{
 		var ft = new FileTransfer();
-		ft.upload(p_data, "http://clinic2care.com/upload.jsp", ECGUploadSuccess, ecguploadfail, options);
+		//ft.upload(p_data, "http://clinic2care.com/upload.jsp", ECGUploadSuccess, ecguploadfail, options);
+		ft.upload(p_data, srads+"?type=upload", ECGUploadSuccess, ecguploadfail, options);
 	}
 }
-        function stethuploadfail(evt)
+        function stethuploadfail(r)
 	{
-	       	console.log(evt);
+	       	//console.log(evt);
+	       	//alert(r.response);
 		//alert("Unable To Upload Please Try Again!");
 		$("#stethspinner").hide();
-		$("#stethRed").show();
-		$("#stethOrange").hide(); $("#dissth").hide();
-		$("#stethGreen").hide(); $("#stethaud").hide();
+		$(".stethRed").show();
+		$('.audiosh').show();
+		$(".stethOrange").hide(); $(".dissth").hide();
+		$(".stethGreen").hide(); //$(".audiosh").hide();
 		 closeRfcomm();
    	 }
 	function ecguploadfail(evt)
 	{
 	       	console.log(evt);
    	 }
-function ECGUploadSuccess()
+function ECGUploadSuccess(r)
 {
-	alert("ECG Uploaded");
+	//alert("ECG Uploaded");
 	$("#ecgOrange").hide();
 	$("#ecgGreen").show();
 	$("#ecgspinner").hide();
@@ -2020,6 +2717,20 @@ function ECGUploadSuccess()
 	//closeRfcomm();
 	btnclicked=1;
 	prediv = divi;
+	//alert(r.response);
+			var bb=JSON.parse(r.response);
+			
+			if(bb.status==true)
+			{
+				alert(bb.message);
+			}
+			else
+			{
+			var obj = jQuery.parseJSON(r.response);
+			 bb=JSON.parse(obj);
+			alert(bb.message);
+			}
+	//alert(r.response);
 }
 
 function failFileEntry(error) {
@@ -2028,7 +2739,7 @@ function failFileEntry(error) {
     }
 
 function readAsText(file) {
-
+//alert("rd");
         var reader = new FileReader();
 
         reader.onload = function(evt) {
@@ -2049,6 +2760,7 @@ function readAsText(file) {
 function bp_readSuccess2(p_data) {
 		if (p_data == "Aborted")
 		{
+		validECG=0;
 			alert("Error recording ECG, please try again");
 			$('#ecgGreen').hide();
 			$('#ecgOrange').hide();
@@ -2058,16 +2770,19 @@ function bp_readSuccess2(p_data) {
 		}
 		else
 		{
+		validECG=1;
       	//dataCnt = p_data.length;
+      	//alert(p_data);
 	plotString = '';
 	var plotData = p_data.split(',');
       	dataCnt = plotData.length-1;
+   $('#chartdiv').show();
 	$('#chart1').show();
 	$('#chart2').show();
 	$('#ecgspinner').hide();
 	$('#ecgGreen').show();
 	$('#ecgOrange').hide();
-	//$('#chart3').show();
+	$('#chart3').show();
 	console.log("Data Count: " + dataCnt);
 			var inc = 0;
 			var wordInc = 0;
@@ -2168,7 +2883,7 @@ function bp_readSuccess2(p_data) {
       								}
 
     					}).replot();
-			  		/*	var plot3 = $.jqplot ('chart3', [plotValsLead3], {
+			  		var plot3 = $.jqplot ('chart3', [plotValsLead3], {
 
 								      title: {
 								      			text: 'ECG Chart - Lead III',
@@ -2205,16 +2920,18 @@ function bp_readSuccess2(p_data) {
       								}
 
     					}).replot();
-      */
+      
 
       			$('#bt-data-dump').hide();
 			//$('#chart1').show();
 //			console.log('plotString:' + plotString);
 			//parentDir.getFile("ecg.txt", {create: true}, gotFileEntry, failFileEntry);
-			gotFileWriter();
-//			alert('Completed Pushing..');
+			//alert("ecg");
+			//gotFileWriter();
+			//alert('Completed Pushing..');
 
 		}
+		
 		return;
 }
 
@@ -2230,9 +2947,9 @@ function bp_readSuccess3 (p_data)
 		if (p_data == "Aborted")
 		{
 			//alert("Error recording Steth, please try again");
-			$('#stethGreen').hide();
-			$('#stethOrange').hide(); $('#dissth').hide();
-			$('#stethRed').show();
+			$('.stethGreen').hide();
+			$('.stethOrange').hide(); $('.dissth').hide();
+			$('.stethRed').show();
 			$('#stethspinner').hide();
 			 closeRfcomm();
 		}
@@ -2243,37 +2960,87 @@ function bp_readSuccess3 (p_data)
                 var options = new FileUploadOptions();
                // $('#bt-data-dump').html( 'Uploading to server...');
 		//$('#bt-data-dump').show();
-		$('#stethGreen').show();
-		$('#dissth').show();
+		$('.stethGreen').show();
+		//$('.dissth').show();
 		
-		$('#stethaud').show();
+		$('.audiosh').show();
 		
-		$('#stethOrange').hide(); $('#dissth').hide();
+		$('.stethOrange').hide(); $('.dissth').hide();
 		$('#error-dump').hide();
 		var ptid = $("#uid").val();
-          	options.fileKey="file1";
+          	options.fileKey="file2";
+          	//alert(fileKey);
             	var todaysDate=new Date();
 		var curr_date = todaysDate.getDate();
 		var curr_month = todaysDate.getMonth();
 	       	var curr_year = todaysDate.getFullYear();
 	       	var curr_hour = todaysDate.getHours();
 	       	var curr_min = todaysDate.getMinutes();
+	       	patID = $('#FindId').val();
+	       	
 		var stethdate = curr_year + '' + curr_month + '' + curr_date + '' + curr_hour + '' + curr_min;
 
-            options.fileName= ptid + '_' + stethdate  + '_' +  p_data.substr(p_data.lastIndexOf('/')+1);
+            options.fileName= patID + '_' + stethdate  + '_' +  p_data.substr(p_data.lastIndexOf('/')+1);
             console.log("Renamed File Name: " + options.fileName);
             options.mimeType="audio/wav";
             options.chunkedMode = false;
+            
             console.log("File Upload..");
+            
+            if((srad==null)||(srad==""))
+        {
+        		var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+				//params.servicekey = srad;
+        }
+        else
+        {
+        		var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+					params.servicekey = srad;
+        
+        }
+            /*var params = new Object();
+          params.username = "AGBHealth@Agrowbook.com";
+          params.password = "9aafd69f056934ec737ffed3ed01d055";
+          params.token = "cc2bdc44f36eec08c089e823572333bc";
+          params.patientId = patID;
+         // params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+         params.servicekey = srad;*/
+
+          options.params = params;
  			if (checkConnection() == 'No network connection'){
 				alert ('No network connection');
 				 closeRfcomm();
 				}
 			else
 			{
-			    alert("1+1");
+			    
             	var ft = new FileTransfer();
-            	ft.upload(p_data, "http://greenocean.in/cpclplus/uploadwav.php", stethUploadSuccess, stethuploadfail, options);
+            	//alert(p_data);
+            	
+            	
+	$('.audiosh').show();
+	 
+	$('.dissth').hide();
+	
+	
+	$('#start').show();
+		$('#stop').hide();
+	 //closeRfcomm();
+	btnclicked=1;
+	prediv = divi;
+            	
+            	//ft.upload(p_data, "http://greenocean.in/cpclplus/uploadwav.php", stethUploadSuccess, stethuploadfail, options);
+            	ft.upload(p_data, srads+"?type=upload", stethUploadSuccess, stethuploadfail, options);
         	}
 	}
 }
@@ -2282,9 +3049,9 @@ function bp_readSuccess5 (p_data)
 		if (p_data == "Aborted")
 		{
 			//alert("Error recording Steth, please try again");
-			$('#stethGreen').hide();
-			$('#stethOrange').hide(); $('#dissth').hide();
-			$('#stethRed').show();
+			$('.stethGreen').hide();
+			$('.stethOrange').hide(); $('.dissth').hide();
+			$('.stethRed').show();
 			$('#stethspinner').hide();
 			 closeRfcomm();
 		}
@@ -2295,17 +3062,18 @@ function bp_readSuccess5 (p_data)
                 var options = new FileUploadOptions();
                // $('#bt-data-dump').html( 'Uploading to server...');
 		//$('#bt-data-dump').show();
-		$('#stethGreen').show();
-		$('#stethOrange').hide(); $('#dissth').hide();
+		$('.stethGreen').show();
+		$('.stethOrange').hide(); $('.dissth').hide();
 		$('#error-dump').hide();
 		var ptid = $("#uid").val();
-        options.fileKey="file1";
+        options.fileKey="file2";
         var todaysDate=new Date();
 		var curr_date = todaysDate.getDate();
 		var curr_month = todaysDate.getMonth();
 	    var curr_year = todaysDate.getFullYear();
 	    var curr_hour = todaysDate.getHours();
 	    var curr_min = todaysDate.getMinutes();
+	    patID = $('#FindId').val();
 		var stethdate = curr_year + '' + curr_month + '' + curr_date + '' + curr_hour + '' + curr_min;
 
             options.fileName= ptid + '_' + stethdate  + '_' +  p_data.substr(p_data.lastIndexOf('/')+1);
@@ -2313,6 +3081,35 @@ function bp_readSuccess5 (p_data)
             options.mimeType="audio/wav";
             options.chunkedMode = false;
             console.log("File Upload..");
+            if((srad==null)||(srad==""))
+        {
+        		var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+				//params.servicekey = srad;
+        }
+        else
+        {
+        		var params = new Object();
+          		params.username = "AGBHealth@Agrowbook.com";
+          		params.password = "9aafd69f056934ec737ffed3ed01d055";
+          		params.token = "cc2bdc44f36eec08c089e823572333bc";
+          		params.patientId = patID;
+          		//params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+					params.servicekey = srad;
+        
+        }
+            /*var params = new Object();
+          params.username = "AGBHealth@Agrowbook.com";
+          params.password = "9aafd69f056934ec737ffed3ed01d055";
+          params.token = "cc2bdc44f36eec08c089e823572333bc";
+          params.patientId = patID;
+         // params.servicekey = "TbhN90zpPbf7vYKliWvm7NFj54xf272";
+			params.servicekey = srad;*/
+          options.params = params;
  			if (checkConnection() == 'No network connection'){
 				alert ('No network connection');
 				 closeRfcomm();
@@ -2322,8 +3119,9 @@ function bp_readSuccess5 (p_data)
 			    //alert("1");
 			   // alert(p_data);
             	var ft = new FileTransfer();
-            	ft.upload(p_data, "http://greenocean.in/cpclplus/uploadwav.php", stethUploadSuccess, stethuploadfail, options);
+            	//ft.upload(p_data, "http://greenocean.in/cpclplus/uploadwav.php", stethUploadSuccess, stethuploadfail, options);
             	// ft.upload(p_data, "http://greenocean.in/cpclplus/uploadwav.php", stethUploadSuccess, stethuploadfail, options);
+            	ft.upload(p_data, srads+"?type=upload", stethUploadSuccess, stethuploadfail, options);
 
         	}
 	}
@@ -2332,16 +3130,32 @@ function bp_readSuccess5 (p_data)
 function stethUploadSuccess(r)
 {
 	//$('#bt-data-dump').html( 'Steth Recorded and Uploaded');$('#bt-data-dump').show();
-	alert("Steth Recorded and Uploaded");
-	$('#stethGreen').show();
-	$('#stethaud').show();
-	$('#stethOrange').hide(); $('#dissth').hide();
-	$('#stethspinner').hide();
-	$('#stethRed').hide();
+	//alert("Steth Recorded and Uploaded");
+	$('.stethGreen').show();
+	$('.audiosh').show();
+	$('.stethOrange').hide(); 
+	$('.dissth').hide();
+	$('.stethspinner').hide();
+	$('.stethRed').hide();
+	$('#start').show();
+		$('#stop').hide();
 	 //closeRfcomm();
 	btnclicked=1;
 	prediv = divi;
-
+	//alert(r.response);
+	//alert(r.bytesSent);
+	var bb=JSON.parse(r.response);
+			
+			if(bb.status==true)
+			{
+				alert(bb.message);
+			}
+			else
+			{
+			var obj = jQuery.parseJSON(r.response);
+			 bb=JSON.parse(obj);
+			alert(bb.message);
+			}
 
 }
 function bp_writeSuccess3( p_data ) {
@@ -2378,7 +3192,7 @@ var tempdiv = prediv;
 					console.log( 'Socket-id: ' + g_socketid );
 					//alert( 'Connected with ' + $('#resvaldiisp').text());
 
-					closeRfcomm();
+					//closeRfcomm();//by subash
 					insertredy();selectval1();
 					console.log('dtype ' + dtype);
 
@@ -2408,41 +3222,50 @@ var tempdiv = prediv;
 		closeRfcomm();
 		prediv = tempdiv;
 console.log("Connect "+$('#resvaldiisp').text());
-
+	//alert($('#resvaldiisp').text());
 	if ($('#resvaldiisp').text())
 	{
 	console.log( 'Discovery connect' );
+	//alert('Discovery connect');
 		window.plugins.BluetoothPlugin.connect(
 				function(socketId) {
+				//alert(socketId);
 					g_socketid = socketId;
+					
 					console.log( 'Socket-id: ' + g_socketid );
-				//	alert( 'Connected with ' + $('#resvaldiisp').text());
+					
 					console.log('dtype ' + dtype);
+					
 					switch (dtype)
 					{
 						case 'g' : console.log("Gluco Write");
-								alert("glucometer Connected  ");
+								//alert("glucometer Connected:");
   								writeRfcomm('g');break;
 						case 'm' : console.log("thermometer Write");
-					 			alert("Thermometer Connected  "); 									writeRfcomm('m');break;
+					 			//alert("Thermometer Connected  ");
+					 			writeRfcomm('m');break;
 						case 'e' : console.log("ECG Write");
-								alert("ECG Connected  ");
+								//alert("ECG Connected  ");
 								writeEcg('e');break;
 						case 's' : console.log("Steth Write");
-         							alert("Stethoscope Connected  ");
+         							//alert("Stethoscope Connected  ");
 							        writeSteth('s');break;
+						case 'q' : console.log("Steth Write");
+         							//alert("Stethoscope Connected  ");
+							        writeSteths('x');break;
+							        
 						case 't' : console.log("torch Write");
 								writeRfcomm('t');break;
 						case 'x' : console.log("torch Write");
 								writeRfcomm('x');break;
 						case 'b' : console.log("B.P Write");
-								alert("B.P Connected  ");
+								//alert("B.P Connected  ");
 								writeRfcomm('b');break;
-						case 'p' : console.log("finfer Oximeter");
-								alert("Pulse Oximeter Connected  ");
+						case 'p' : console.log("finger Oximeter");
+								//alert("Pulse Oximeter Connected  ");
 								writeRfcomm('p');break;
 						case 'r' : console.log("device all value");
-								alert(" Connected");
+								//alert(" Connected");
 								$('#cmnpinner').hide();
 
 
@@ -2465,13 +3288,14 @@ console.log("Connect "+$('#resvaldiisp').text());
 					case 'e' : 	alert('Please Switch On Device...');
 							$('#ecgspinner').hide(); $("#ecgRed").show(); $("#ecgOrange").hide();break;
 					case 's' : 	alert('Please Switch On Device...');
-						        $('#stethspinner').hide();$("#stethRed").show(); $("#stethOrange").hide(); $("#dissth").hide();$("#stethGreen").hide(); $("#stethaud").hide();
-break;
+						        $('.stethspinner').hide();$(".stethRed").show(); $(".stethOrange").hide(); $(".dissth").hide();$(".stethGreen").hide(); $(".audiosh").hide(); $("#start").show(); $("#stop").hide();
+								
+								break;
 					case 't' : 	alert('Please Switch On Device...');
-							$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torchof.png"); $('#ton').val('Off');//.slider("refresh");
+							$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torch.png"); $('#ton').val('Off');//.slider("refresh");
 							$("#torchOrange").hide();$("#torchGreen").hide();break;
 					case 'x' :	alert('Please Switch On Device...');
-							$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torchof.png"); $('#ton').val('Off');//.slider("refresh");
+							$('#torchspinner').hide();$("#torchRed").show(); $("#trchimg").attr("src","images/torch.png"); $('#ton').val('Off');//.slider("refresh");
 							$("#torchOrange").hide();$("#torchGreen").hide();break;
 					case 'b' :	alert('Please Switch On Device...');
 							$('#bpspinner').hide();$("#bpmRed").show(); $("#bpmOrange").hide(); $("#disbp").hide();break;
@@ -2488,31 +3312,37 @@ break;
 }
 else
 {
+
 switch (dtype)
 					{
 						case 'g' : console.log("Gluco Write");
-								alert("glucometer Connected  ");
-  								writeRfcomm('g');break;
+								//alert("glucometer Connected:");
+  								writeRfcomm('g');break; 
 						case 'm' : console.log("thermometer Write");
-					 			alert("Thermometer Connected  "); 									writeRfcomm('m');break;
+					 			//alert("Thermometer Connected  "); 									
+					 			writeRfcomm('m');break;
 						case 'e' : console.log("ECG Write");
-								alert("ECG Connected  ");
+								//alert("ECG Connected  ");
 								writeEcg('e');break;
 						case 's' : console.log("Steth Write");
-         							alert("Stethoscope Connected  ");
+         							//alert("Stethoscope Connected  ");
 							        writeSteth('s');break;
+						case 'q' : console.log("Steth Write");
+         						   //alert("Stethoscope Connected  ");
+								   writeSteths('x');break;
+						
 						case 't' : console.log("torch Write");
 								writeRfcomm('t');break;
 						case 'x' : console.log("torch Write");
 								writeRfcomm('x');break;
 						case 'b' : console.log("B.P Write");
-								alert("B.P Connected  ");
+								//alert("B.P Connected  ");
 								writeRfcomm('b');break;
 						case 'p' : console.log("finfer Oximeter");
-								alert("Pulse Oximeter Connected  ");
+								//alert("Pulse Oximeter Connected  ");
 								writeRfcomm('p');break;
 						case 'r' : console.log("device all");
-								alert("connected");
+								//alert("connected");
 								writeRfcomm('r');break;
 
 					}
@@ -2543,6 +3373,255 @@ function closeRfcomm() {prediv='';
 			btnclicked=1;
 }
 
+$("#server_settings").click(function(){
+
+	$("#server_hs").show();
+	$("#key_hs").hide();
+});
+$("#key_settings").click(function(){
+
+	
+	$("#key_hs").show();
+	$("#server_hs").hide();
+});
+
+$("#add_server1").click(function(){
+$("#addpart1").show();
+$("#confser1").hide();
+$("#readserver1").hide();
+});
+$("#conf_server1").click(function(){
+$("#addpart1").hide();
+$("#confser1").show();
+$("#readserver1").show();
+ selectserv1();
+ selectready1();
+});
+
+$("#add_server").click(function(){
+$("#addpart").show();
+$("#confser").hide();
+$("#readserver").hide();
+});
+$("#conf_server").click(function(){
+$("#addpart").hide();
+$("#confser").show();
+$("#readserver").show();
+ selectserv();
+ selectready();
+});
+
+$("#add_url1").click(function(){
+// alert($("#url_server").val());
+ insertserver1();
+
+ });
+ 
+ $("#add_url").click(function(){
+// alert($("#url_server").val());
+ insertserver();
+
+ });
+ 
+ $("#add_serv").click(function(){
+ 
+		insready();
+		selectready();
+		
+ });
+ $("#add_serv1").click(function(){
+ 
+		insready1();
+		selectready1();
+		
+ });
+ 
+ function insready()
+	{
+		db.transaction(insTB, errorIST, successTB);
+	}
+	function insready1()
+	{
+		db.transaction(insTB1, errorIST, successTB);
+	}
+	
+	function insTB(tx)
+	{
+	   var server= $( "#serv_sel option:selected" ).val();
+	  //alert("insertserver");
+	   if((server!="-Select Key-")&&(server!="null"))
+	   tx.executeSql('INSERT INTO insservval (saddress) VALUES ("' +server+'")');
+	   else
+		alert("Empty Value Not Allowed !");
+	}
+	function insTB1(tx)
+	{
+	   var server= $( "#serv_sel1 option:selected" ).val();
+	  //alert("insertserver");
+	   if((server!="-Select server-")&&(server!="null"))
+	   tx.executeSql('INSERT INTO sinsservval (saddress) VALUES ("' +server+'")');
+	   else
+		alert("Empty Value Not Allowed !");
+	}
+	
+	function selectready()
+	{
+		db.transaction(selTB, errorCB, successTBS);
+		//alert("selected");
+	}
+	function selectready1()
+	{
+		db.transaction(selTB1, errorCB, successTBS);
+		//alert("selected");
+	}
+	
+	function selTB(tx)
+	{
+	tx.executeSql('SELECT * FROM insservval ORDER BY id DESC LIMIT 1', [], readserver1, errorCB);
+	console.log('SELECT * FROM insservval');
+	}
+	function selTB1(tx)
+	{
+	tx.executeSql('SELECT * FROM sinsservval ORDER BY id DESC LIMIT 1', [], readserver11, errorCB);
+	console.log('SELECT * FROM sinsservval');
+	}
+	
+	function readserver1(tx, results)
+	{
+//alert("readserver");
+	  var len = results.rows.length;
+          if(len==0)$('#readSuccess1').html( "No Devices Available.");
+	  else
+	  	$('#readSuccess1').html("");
+	  	
+	  $('#sreadserver').append("<table border>");
+	  $('#sreadserver').html("<th>Service Key</th><th> </th>");
+    	  for (var i=0;i<len; i++)
+	    {
+
+         $('#sreadserver').append("<tr><td>"+ results.rows.item(i).saddress +"</td><td alidn='center'><a href='#' class='del'><img src='images/delete.png' border='0' width='40' height='40' class='textmiddle' ></img></a></td></tr>");
+			
+			srad=results.rows.item(i).saddress;
+			//alert(srad);
+       	    }
+	}
+	function readserver11(tx, results)
+	{
+//alert("readserver");
+	  var len = results.rows.length;
+          if(len==0)$('#readSuccess11').html( "No Devices Available.");
+	  else
+	  	$('#readSuccess11').html("");
+	  	
+	  $('#sreadserver1').append("<table border>");
+	  $('#sreadserver1').html("<th>Server</th><th> </th>");
+    	  for (var i=0;i<len; i++)
+	    {
+
+         $('#sreadserver1').append("<tr><td>"+ results.rows.item(i).saddress +"</td><td alidn='center'><a href='#' class='del1'><img src='images/delete.png' border='0' width='40' height='40' class='textmiddle' ></img></a></td></tr>");
+			
+			srads=results.rows.item(i).saddress;
+			//alert(srad);
+       	    }
+	}
+ 
+
+function insertserver()
+	{
+		db.transaction(addserverTB, errorIST, successTB);
+	}
+	function insertserver1()
+	{
+		db.transaction(addserverTB1, errorIST, successTB);
+	}
+	
+	function addserverTB(tx)
+	{
+	   var seraddress = $("#url_server").val();
+	 
+	   if((seraddress!="null")&&(seraddress!=""))
+	   {
+	   tx.executeSql('INSERT INTO servval (saddress) VALUES ("' +seraddress+'")');
+	   alert("Key Added");
+	   $("#url_server").val("");
+	   }
+	   else
+		alert("Empty Value Not Allowed !");
+	}
+	function addserverTB1(tx)
+	{
+	   var seraddress = $("#url_server1").val();
+	 
+	   if((seraddress!="null")&&(seraddress!=""))
+	   {
+	   tx.executeSql('INSERT INTO sservval (saddress) VALUES ("' +seraddress+'")');
+	   alert("Server Added");
+	   $("#url_server1").val("");
+	   }
+	   else
+		alert("Empty Value Not Allowed !");
+	}
+	
+	function selectserv()
+	{
+		db.transaction(selectservTB, errorCB, successTBS);
+		//alert("selected");
+	}
+	function selectserv1()
+	{
+		db.transaction(selectservTB1, errorCB, successTBS);
+		//alert("selected");
+	}
+	function selectservTB(tx)
+	{
+	tx.executeSql('SELECT * FROM servval', [], sreadSuccess, errorCB);
+	console.log('SELECT * FROM servval');
+	}
+	function selectservTB1(tx)
+	{
+	tx.executeSql('SELECT * FROM sservval', [], sreadSuccess1, errorCB);
+	console.log('SELECT * FROM sservval');
+	}
+	
+	function sreadSuccess(tx, results)
+	{
+
+	  var len = results.rows.length;
+          if(len==0)
+          alert("Service Key Not Available");
+	  else
+	  	$('#serv_sel').html("");
+	  $('#serv_sel').append(  $( '<option value="select">-Select Key-</option>' ) );
+
+		for( var i = 0; i < len; i++ )
+
+		{
+			$('#serv_sel').append(  $( '<option value="' + results.rows.item(i).saddress+ '">' + results.rows.item(i).saddress+ '</option>' ) );
+
+			}
+			
+			
+	}
+	function sreadSuccess1(tx, results)
+	{
+
+	  var len = results.rows.length;
+          if(len==0)
+          alert("Server Not Available");
+	  else
+	  	$('#serv_sel1').html("");
+	  $('#serv_sel1').append(  $( '<option value="select">-Select server-</option>' ) );
+
+		for( var i = 0; i < len; i++ )
+
+		{
+			$('#serv_sel1').append(  $( '<option value="' + results.rows.item(i).saddress+ '">' + results.rows.item(i).saddress+ '</option>' ) );
+
+			}
+			
+			
+	}
+
 $(function() {
     $( "#Ptdob" ).datepicker({changeYear: true,
             yearRange: 'c-30:c',
@@ -2563,8 +3642,7 @@ $(function() {
 
 
 
-
-
+            
 
 
 

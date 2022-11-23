@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>Metronic | UI Features - Tiles</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+	<link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="css/style-metro.css" rel="stylesheet" type="text/css"/>
+	<link href="css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css" />
+	
+	<style type="text/css">
+.error {
+color: #b94a48;
+
+}
+</style>
+
+	<!-- END GLOBAL MANDATORY STYLES -->
+	
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body>
+
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container row-fluid">
+		
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							Asha+ <small></small>
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="index.html">Home</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="javascript:;">Registration Form</a>
+							</li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div id="AddNewForm"> 
+				
+<div class="portlet box blue">
+										<div class="portlet-title">
+											<div class="caption"><i class="icon-reorder"></i>Registration Form</div>
+											<div class="tools">
+												<a href="javascript:;" class="collapse"></a>
+												<a href="#portlet-config" data-toggle="modal" class="config"></a>
+												<a href="javascript:;" class="reload"></a>
+												<a href="javascript:;" class="remove"></a>
+											</div>
+										</div>
+										<div class="portlet-body form">
+											<!-- BEGIN FORM-->
+											
+												<h3 class="form-section"><strong>Person Information</strong></h3>
+												<div class="row-fluid">
+													<div class="span6 ">
+														<div class="control-group">
+															<label class="control-label" for="firstName">First Name *</label>
+															<div class="controls">
+																<input type="text" id="firstName" class="m-wrap span12" placeholder="">
+																<span id="err0" class="help-block error hide">Enter your first name</span>
+															</div>
+														</div>
+													</div>
+													<!--/span-->
+													<div class="span6 ">
+														<div class="control-group errors">
+															<label class="control-label" for="lastName">Last Name *</label>
+															<div class="controls">
+																<input type="text" id="lastName" class="m-wrap span12" placeholder="">
+																<span id="err1" class="help-block error hide">Enter your last name</span>
+															</div>
+														</div>
+													</div>
+													<!--/span-->
+												</div>
+												<!--/row-->
+												<div class="row-fluid">
+													<div class="span6 ">
+														<div class="control-group">
+															<label class="control-label">Gender *</label>
+															<div class="controls">
+																<select class="m-wrap span12" id="gender">
+																	<option value="">--Select--</option>
+																	<option value="Male">Male</option>
+																	<option value="Female">Female</option>
+																</select>
+																<span id="err4" class="help-block error hide">Select your gender.</span>
+															</div>
+														</div>
+													</div>
+													<!--/span-->
+													<div class="span6 ">
+														<div class="control-group">
+															<label class="control-label">Date of Birth *</label>
+															<div class="controls">
+																<input  id="dob" class="m-wrap span12" placeholder="dd/mm/yyyy" readonly="" >
+																<span id="err3" class="help-block error hide">Select your Date of birth.</span>
+															</div>
+														</div>
+													</div>
+													<!--/span-->
+												</div>
+												<div class="row-fluid">
+													<div class="span6 ">
+														<div class="control-group">
+															<label class="control-label">Mobile Number *</label>
+															<div class="controls">
+																<input type="text" id="MobileNumber" class="m-wrap span12" >
+																<span id="err2" class="help-block error hide">Enter your Mobile Number.</span>
+															</div>
+														</div>
+													</div>
+													<!--/span-->
+													<div class="span6 ">
+														<div class="control-group">
+															<label class="control-label">Age *</label>
+															<div class="controls">
+																<input type="text" id="age" class="m-wrap span12" >
+																<span id="err5" class="help-block error hide">Select your Date of birth.</span>
+															</div>
+														</div>
+													</div>
+													<!--/span-->
+												</div>												
+												<!--/row-->        
+												<h3 class="form-section"><strong>Address</strong></h3>
+												<div class="row-fluid">
+													<div class="span12 ">
+														<div class="control-group">
+															<label class="control-label">Street</label>
+															<div class="controls">
+																<input id="street" type="text" class="m-wrap span12">
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row-fluid">
+													<div class="span6 ">
+														<div class="control-group">
+															<label class="control-label">City</label>
+															<div class="controls">
+																<input type="text" id="city" class="m-wrap span12"> 
+															</div>
+														</div>
+													</div>
+													<!--/span-->
+													<div class="span6 ">
+														<div class="control-group">
+															<label class="control-label">Post Code</label>
+															<div class="controls">
+																<input type="text" id="pincode" class="m-wrap span12"> 
+															</div>
+														</div>
+													</div>
+													<!--/span-->
+												</div>
+												<!--/row-->           
+
+												<div class="form-actions">
+													<button  class="btn green" id="RegisterBtn"><i class="icon-ok"></i> Register</button>
+													<a  class="btn" id="CancelReg" href="index.html">Cancel</a>
+													<span id="idgenrated"><strong><font size="7px;"/></strong></span>
+												</div>
+										
+											<!-- END FORM--> 
+										</div>
+									</div>				
+				
+				</div>
+				<div id="searchResult" class="hide"> searchResult Coming here... </div>
+				<div id="stethResult" class="hide"> stethResult Coming here... </div>
+				<div id="TempResult" class="hide"> TempResult Coming here... </div>
+				<div id="BpResult" class="hide"> BpResult Coming here... </div>
+				<div id="EcgResult" class="hide"> EcgResult Coming here... </div>
+				<div id="SettingsWindow" class="hide"> SettingsWindow Coming here... </div>
+				<div id="PulseWindow" class="hide"> PulseWindow Coming here... </div>
+				
+				<!-- END PAGE CONTENT-->
+			</div>
+			<!-- END PAGE CONTAINER--> 
+		</div>
+		<!-- END PAGE -->    
+	</div>
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   
+	<script src="js/jquery-1.10.1.js" type="text/javascript"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova-2.4.0.js"></script>
+	<script src="js/jquery-migrate-1.2.1.js" type="text/javascript"></script>
+	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+	   
+	<script src="js/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
+	<!--[if lt IE 9]>
+	<script src="js/excanvas.min.js"></script>
+	<script src="js/respond.min.js"></script>  
+	<![endif]-->   
+	<script src="js/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="js/jquery.blockui.min.js" type="text/javascript"></script>  
+	<script src="js/jquery.cookie.min.js" type="text/javascript"></script>
+	<script src="js/jquery.uniform.min.js" type="text/javascript" ></script>
+
+  
+  <script src="plugins/jquery-ui/jquery-ui.js" type="text/javascript"></script>   
+	<!-- END CORE PLUGINS -->
+	
+
+	<script>
+	
+	$(function () {
+
+$("#dob").datepicker({ 	      	
+				changeMonth: true,
+	      	changeYear: true,
+	      	maxDate: '0'   
+	      	});
+	      	
+			$('#RegisterBtn').click(function () {
+			var regval = new Array();
+			regval[0] = $('#firstName').val();
+			regval[1] = $('#lastName').val();
+			regval[2] = $('#MobileNumber').val();
+			regval[3] = $('#dob').val();
+			regval[4] = $('#gender').val();
+			regval[5] = $('#age').val();
+			regval[6] = $('#street').val();
+			regval[7] = $('#city').val();
+			regval[8] = $('#pincode').val();
+				
+				var len = regval.length-3;
+			   var val = 1;
+				for (var i=0;i<len;i++) {
+				if(regval[i]=="")
+				{
+				val++;
+				$('#err'+i).show();
+				$('#err'+i).addClass('error');
+				}else{
+			
+				$('#err'+i).hide();
+		//		$('#err'+i).removeClass('error');
+									
+				}
+	
+}
+		
+if (val==1) {
+
+				$.ajax({
+				url 		: 'http://greenocean.in/n-rest/index.php/api/example/pragoreg',
+				dataType	: 'json',
+			   type    	: 'POST',
+				data		: {data:regval},
+				success 	: function (data){
+				
+				 
+				 
+						if (data.response =="true")
+						alert (data.message);
+						else
+						alert(data.message);
+						
+						 NewReg_idgen();
+						
+						},
+				error		:function () {
+	alert("error");
+				}
+					});	
+	
+}			
+		
+			
+		});
+		
+	function NewReg_idgen()
+	{
+	    
+
+			var data = new Array();
+			data[0] = $("#firstName").val();
+			data[1] = $("#MobileNumber").val();
+			data[2] = $("#gender").val();
+			$.ajax({
+			'dataType': 'json',
+			'type'    : 'GET',
+			'url'     : 'http://greenocean.in/n-rest/index.php/api/example/pragoreget1',
+			'data'    : {data: data},
+			'success' : function(data){
+				if (data.response =='true')
+				{
+					sessionStorage['counter'] =data.emp_id;
+					sessionStorage['pername'] =data.name;
+					sessionStorage['validationid'] ="1";
+					
+					document.querySelector('#content').innerHTML = sessionStorage.getItem('counter');	
+					
+				}
+			}
+		});
+
+
+	}
+	
+	
+function getAge(dateString) {
+        var now = new Date();
+        var today = new Date(now.getYear(),now.getMonth(),now.getDate());
+        var yearNow = now.getYear();
+        var monthNow = now.getMonth();
+        var dateNow = now.getDate();
+
+        var dob = new Date(dateString.substring(6,10),
+        dateString.substring(0,2)-1,
+        dateString.substring(3,5)
+        );
+
+        var yearDob = dob.getYear();
+        var monthDob = dob.getMonth();
+        var dateDob = dob.getDate();
+        var age = {};
+        var ageString = "";
+        var yearString = "";
+        var monthString = "";
+        var dayString = "";
+
+
+        var yearAge = yearNow - yearDob;
+
+        if (monthNow >= monthDob)
+        var monthAge = monthNow - monthDob;
+        else {
+        yearAge--;
+        var monthAge = 12 + monthNow -monthDob;
+        }
+
+        if (dateNow >= dateDob)
+        var dateAge = dateNow - dateDob;
+        else {
+        monthAge--;
+        var dateAge = 31 + dateNow - dateDob;
+
+        if (monthAge < 0) {
+        monthAge = 11;
+        yearAge--;
+        }
+        }
+
+        age = {
+        years: yearAge,
+        months: monthAge,
+        days: dateAge
+        };
+
+        if ( age.years > 1 ) yearString = " Yrs";
+        else yearString = " Yr";
+        if ( age.months> 1 ) monthString = " Mns";
+        else monthString = " Mn";
+        if ( age.days > 1 ) dayString = " Days";
+        else dayString = " Day";
+
+
+        if ( (age.years > 0) && (age.months > 0) && (age.days > 0) )
+        ageString = age.years + yearString + ", " + age.months + monthString + " old.";
+        else if ( (age.years == 0) && (age.months == 0) && (age.days > 0) )
+        ageString = "Only " + age.days +dayString+ " old!";
+        else if ( (age.years > 0) && (age.months == 0) && (age.days == 0) )
+        ageString = age.years + yearString + " old. Happy Birthday!!";
+        else if ( (age.years > 0) && (age.months > 0) && (age.days == 0) )
+        ageString = age.years + yearString + " and " + age.months + monthString + " old.";
+        else if ( (age.years == 0) && (age.months > 0) && (age.days > 0) )
+        ageString = age.months + monthString + " old.";
+        else if ( (age.years > 0) && (age.months == 0) && (age.days > 0) )
+        ageString = age.years + yearString +" old.";
+        else if ( (age.years == 0) && (age.months > 0) && (age.days == 0) )
+        ageString = age.months + monthString + " old.";
+        else ageString = "Could not calculate age!";
+
+        return ageString;
+}
+
+// A bit of jQuery to call the getAge() function and update the page...
+
+
+        $("#age").click(function(e) {
+	        	if ($("#dob").val()!="") {
+	         e.preventDefault();
+	         var dateval = getAge($("#dob").val());
+	         $("#age").val(dateval);
+	    		 }
+        });	
+	
+});
+		jQuery(document).ready(function() {       
+		  
+		  
+
+		
+		$('#CancelReg').click(function () {
+		$('.tiles').show();
+		$('#AddNewForm').hide();
+		});
+		
+		
+		
+		$('#find_button').click(function () {
+		$('.tiles').hide();
+		$('#searchResult').show();
+		});
+		
+		$('#steth_button').click(function () {
+		$('.tiles').hide();
+		$('#stethResult').show();
+		});
+		
+		$('#temp_button').click(function () {
+		$('.tiles').hide();
+		$('#TempResult').show();
+		});
+		
+		$('#bp_button').click(function () {
+		$('.tiles').hide();
+		$('#BpResult').show();
+		});
+		
+		$('#torch_button').click(function () {
+		$('.tiles').hide();
+	
+		});
+		
+		$('#ecg_button').click(function () {
+		$('.tiles').hide();
+		$('#EcgResult').show();
+		});
+		
+		$('#settings_button').click(function () {
+		$('.tiles').hide();;
+		$('#SettingsWindow').show();
+		});
+		
+		$('#pulse_button').click(function () {
+		$('.tiles').hide();
+		$('#PulseWindow').show();
+		});
+		
+		
+		   
+		});
+	</script>	
+	
+	
+	
+
+	
+
+	<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

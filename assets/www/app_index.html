@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>Metronic | UI Features - Tiles</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+	<link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="css/style-metro.css" rel="stylesheet" type="text/css"/>
+	<link href="css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="css/uniform.default.css" rel="stylesheet" type="text/css" />
+	
+<style type="text/css">
+.thumbnail {
+margin:center;
+
+}
+</style>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body onload="onDeviceReady()" class="page-header-fixed page-footer-fixed">
+
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container row-fluid">
+		
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+				
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a id="homebtn">Home</a> 
+								<i class="icon-angle-right"></i>
+								
+						
+							</li>
+							<li class="pull-right">
+								
+								<div  id="set" >
+									
+								<img class="bg-torchbg" id="trchimg" src="images/setup1.png" alt="" style="margin-top:-5px; margin-right:10px;"" width="30"></div>
+						
+							</li>
+							<li class="pull-right">
+								
+								<a id="bpSend">
+									<img class="bg-yellow" src="images/upload.png" alt="" style="margin-top:-5px; margin-right:20px;" width="30">
+								</a>
+						
+							</li>
+							<span style="float:right" id="content"></span>
+						</ul>
+						<strong><h4><div id="pername" class=" hide alert alert-success"></div></h4></strong>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="tiles" >
+				
+				<div id="erperid" class="hide alert alert-error"><strong>Person Id Not Available!</strong></div>
+						
+					<!--<a class="tile bg-yellow " href="regform.html" id="addfile_button">
+						<div class="tile-body">
+						<img src="images/file_add.png" alt="">
+						</div>
+						<div class="tile-object">
+							
+
+						</div>
+						</a>-->
+					
+					<!--<a class="tile bg-blue" href="find.html" id="find_button">
+						<div class="tile-body">
+							<img src="images/find.png" alt="">
+						</div>
+						<div class="tile-object">
+							<div class="name">
+							</div>
+							
+						</div>
+					</a>-->		
+							<div class="portlet box purple hide" id="settings">
+										<div class="portlet-title">
+											<div class="caption"><i class="icon-reorder"></i>Device Settings</div>
+											<div class="tools">
+												<a href="javascript:;" class="collapse"></a>
+												<a href="#portlet-config" data-toggle="modal" class="config"></a>
+												<a href="javascript:;" class="reload"></a>
+												<a href="javascript:;" class="remove"></a>
+											</div>
+										</div>
+											<div class="portlet-body form">
+												<div class="row-fluid">
+													<div class="span12 ">
+
+													
+														<button id="discoverBT" class="btn blue m-wrap span12">Discover <img class="hide" align='right' width="22"  src="images/ajax-modal-loading.gif" id="disimg"></button> 
+															
+															<select id='bt-devices-select' class="m-wrap span12 hide"></select>											
+															<!--<select class="m-wrap span12" id='bt-bondeddevices-select'>
+																<option value="null">-select Device From List-</option>
+																<option value="+tronic SwissKnife">+tronic SwissKnife</option>
+																<option value="Ultra2 Glucometer">Ultra2 Glucometer</option>
+																<option value="3 Lead ECG">3 Lead ECG</option>
+																<option value="Weighing Scale">Weighing Scale</option>    	
+															</select>-->
+															<br><div><button id="selectval" class="btn green span6">ADD</button> <button id="delch" class="btn red span6" >Delete All</button> </div>
+															<table id="readSuccess" class="table table-bordered  table-hover"><tr><th>Device Name</th><th>Device Address</th><th> </th></tr>
+															</table>		
+														
+												
+
+														</div>
+													
+													</div>
+													
+
+											</div>											
+											</div>
+											<div class="portlet-body form">
+											
+												<div class="row-fluid" >
+													<div class="span12 ">
+														<div class="control-group">
+															
+															 <div class="input-group">
+															            <input type="text" id="FindId" style=" width: 90%; height: 30px;" placeholder="Patient ID/Name"/>
+															            <input type="text" id="a_gender" style=" width: 43%; height: 30px;" placeholder="Gender"/>
+															            <input type="number" id="a_age" style=" width: 42%; height: 30px;" placeholder="Age"/>
+															            
+															            </div>
+															            </div>
+															            </div>
+															            </div>
+															            </div>
+															            
+															            
+															            
+					<div class="tile double bg-steathbg"   id="start">
+						<div class="tile-body">
+						<img id="starts" style="" src="images/fstart.png" width="40">
+							<div><img src="images/steth.png" height="" width="120" alt=""  style="margin-left:20px;"></div>
+						
+						</div>
+						
+						<div class="tile-object"> 
+							<!--<img id="pausebtn" align="left" src="images/Green.png" style="height:15px;width:15px;"  class="ui-btn-left" />-->
+							
+							<img class="stethGreen clrhide" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;" />
+							<img class="stethOrange clrhide" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;" />
+							<img class="stethRed clrhide" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;" />
+							<img class="dissth hide" align='left' width="30"  src="images/ajax-modal-loading.gif">
+							<div class="audiosh hide"><audio id="stethaud" src="" controls="true" preload ="none" class="hides span11" ></audio></div>
+							
+						</div>
+					
+					</div>
+					<div class="tile double bg-steathbg" style="display:none; "  id="stop">
+						<div class="tile-body">
+						<img id="stops" src="images/fstop.png" width="40" style="align:right;">
+							<div><img src="images/steth.png" height="" width="120" alt=""></div>
+						
+						</div>
+						
+						<div class="tile-object"> 
+							<!--<img id="pausebtn" align="left" src="images/Green.png" style="height:15px;width:15px;"  class="ui-btn-left" />-->
+							
+							<img class="stethGreen clrhide" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"/>
+							<img class="stethOrange clrhide" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"/>
+							<img class="stethRed clrhide" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"/>
+							<img class="hide dissth" align='left' width="30"  src="images/ajax-modal-loading.gif" >
+							<div class="audiosh hide"><audio id="stethauds" controls="true" preload ="none" class="hides span11" ></audio></div>
+							
+						</div>
+					
+					</div>
+					<div>
+					<div class="tile bg-gluco"  id="glucometer">
+						<div class="tile-body" style="margin-left:12px;">
+						<img src="images/gluco.png" alt="" width="100">
+						</div>
+						
+						<div class="tile-object">
+						<div class="name">
+								<strong><div id="glucoValueReturn" style="font-size:21px;">  </div>	</strong>
+							</div>
+							<img id="glucometerGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="glucometerOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="glucometerRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />	
+							<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="glucospinner">					
+						</div>
+					</div>	
+					</div>
+					<div class="tile bg-gluco"  id="com_glu">	
+					<div class="tile-body">
+						Gluco:<input type="number" id="cgluco"  placeholder="Gluco" style="width:60%;margin-top:20px;margin-left:20px;" class="compare">
+						</div>			
+					
+					</div>
+					<div>
+						<div class="tile bg-spo2bg"  id="pox">
+						<div class="tile-body">
+								<img src="images/pulse.png" alt="" width="120" style="margin-top:-11px;">
+						</div>
+						<div class="tile-object">
+							<div class="name">
+								<strong><div id="poxValueReturn" style="font-size:20px; line-height:100%; text-transform: lowercase;"></div>	</strong>
+							</div>
+							<img id="poxGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="poxOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="poxRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="dispox">
+						</div>
+					</div>
+					</div>
+						<div class="tile bg-spo2bg"  id="com_pul">	
+					<div class="tile-body">
+					
+					Pulse:<input type="number" id="cspo2" placeholder="Spo2" style="width:60%;margin-top:10px;margin-left:20px;" class="compare">
+					<input type="number" id="cpulse" placeholder="Pulse" style="width:60%;margin-top:5px;margin-left:20px;" class="compare">
+					</div>
+					</div>
+					
+					
+					<div>
+					<div class="tile bg-thermo"  id="temp">
+											
+						<div class="tile-body" style="margin-left:12px;">
+							<img src="images/temp.png" alt="" width="110">
+						
+						</div>
+						<div class="tile-object">
+							<strong><div id ="thermValueReturn" style="font-size:21px;margin-bottom:0px;"></div></strong>
+						
+						<img id="tempGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+						<img id="tempOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+						<img id="tempRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+						<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="distmp">
+						</div>
+
+					</div>
+					</div>
+					<div class="tile bg-thermo"  id="com_therm">	
+					<div class="tile-body">
+					Temp:<input type="number" id="ctemp" placeholder="Temp" style="width:60%;margin-top:20px;margin-left:20px;" class="compare">
+					</div>
+					</div>
+					
+								
+						<div>
+					<div class="tile bg-bpmbg"  id="bpm">
+						<div class="tile-body" style="margin-left:12px;">
+						<img src="images/bpm.png" width="100" alt="">
+							
+						</div>
+						<div class="tile-object">
+						
+				<strong><div id="bpmValueReturn" style="font-size:21px; margin-left:10px;"></div></strong>
+		
+			<img id="bpmGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+			<img id="bpmOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+			<img id="bpmRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+			<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="disbp">
+						</div>
+					</div>
+					</div>
+					<div class="tile bg-bpmbg"  id="com_bp">	
+					<div class="tile-body">
+				BP:<input type="number" id="csys" placeholder="SYS" style="width:60%;margin-top:10px;margin-left:20px;" class="compare">
+				<input type="number" id="cdia" placeholder="DIA" style="width:60%;margin-top:5px;margin-left:20px;" class="compare">
+					</div>
+					</div>
+					
+					<div class="tile double bg-ecgbg"  id="ecg">
+						<div class="tile-body"  style="margin-left:60px; margin-top:-20px;">
+						<img src="images/ecg.png" alt="" width="150px;">
+						</div>
+						<div class="tile-object">
+							<img id="ecgGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="ecgOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="ecgRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />	
+							<img class="hide " align='left' width="20"  src="images/ajax-modal-loading.gif" id="ecgspinner">					
+						</div>
+					</div>
+				
+					
+					<div class="row-fluid">
+					<div class="span12">
+              
+						<!-- BEGIN DYNAMIC CHART PORTLET-->
+						<div class="portlet box blue hide" id="chartdiv">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-reorder"></i>ECG</div>
+								<div class="tools">
+									<a href="javascript:;" class="collapse"></a>
+									<a href="#portlet-config" data-toggle="modal" class="config"></a>
+									<a href="javascript:;" class="reload"></a>
+									<a href="javascript:;" class="remove"></a>
+								</div>
+							</div>
+							<div class="portlet-body">
+							<!--	<div id="chart_4" class="chart"></div>-->
+
+						<table class="table">
+						<tr><td>
+						<div id="img_chart">
+							<div id="chart1" style="height:160px; display : none "></div>
+							<div id="chart2" style="height:160px; display : none "></div>
+							<div id="chart3" style="height:180px; display : none "></div>
+							</div>
+						</td></tr>
+						</table>						
+							
+							</div>
+						</div>
+						<!-- END DYNAMIC CHART PORTLET-->
+
+             
+					</div>
+				</div>
+				
+											
+											
+						<!--<div id="img-out"></div>-->
+        	
+					
+					
+				<!--	<div class="tile  bg-purple "  id="power_button">
+					
+						<div class="tile-body">
+							<img src="images/power-off-button.png" alt="">
+						</div>
+
+					</div>	-->	
+					
+					<!--<div class="tile bg-blue " style="display:none" id="ton">
+						<div class="tile-body">
+						<img id="trchimg" src="images/torch.png" alt="">
+						
+						</div>
+						<div class="tile-object">
+						<img id="torchGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
+						<img id="torchOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
+						<img id="torchRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />	-->					
+						
+		<!--	<select name="torchval" id="torchval"  >   
+				<option  value="Off">OFF</option>
+				<option  value="On" >ON</option>
+
+			</select> 
+			
+			<button id="ton" class="mini btn green">ON</button><button value="Off" id="toff" class="mini btn red">OFF</button>-->
+			
+		
+						<!--</div>
+					</div>-->
+													
+						<!--<a class="tile bg-torchbg" id="set" style="margin-left:7px;" href="setup.html">
+						
+						<div class="tile-body">
+							<img id="trchimg" src="images/setup1.png" alt="">
+						</div>
+						<div class="tile-object">
+							<div class="name">
+								
+							</div>
+						</div>
+					</a>
+
+					
+					<a class="tile bg-yellow " style="display:none" id="bpSend">
+						<div class="corner"></div>
+						<div class="check"></div>
+						<div class="tile-body">
+							<img src="images/upload.png" alt="">
+						</div>
+						<div class="tile-object">
+							<div class="name">
+								
+							</div>
+						</div>
+					</a>-->
+					
+					
+        	<input type="button" id="saveFile_btn" value="Save" class="hide"/>
+        	
+        
+        	
+					
+						
+						<!--<a class="tile bg-yellow" style="display:none" id="whatsapp">
+						<div class="corner"></div>
+						<div class="check"></div>
+						<div class="tile-body">
+							<i class="icon-share" style="margin-top:30px;"></i>
+						</div>
+						<div class="tile-object">
+							<div class="name">
+								
+							</div>
+						</div>
+					</a>	-->						
+						
+					
+
+									
+<br>
+
+
+<div id="resvaldiisp" style="display:none"></div>
+<input type="hidden" id="therm" />
+<input type="hidden" id="spo22" />
+<input type="hidden" id="pulse2" />
+<input type="hidden" id="sys" />
+<input type="hidden" id="dia" />
+<input type="hidden" id="gluco" />
+<input type="hidden" id="uid" />
+<input type="hidden" id="validationid" />
+<button id="DevAll" class="hide"></button>
+
+
+				</div>
+
+				
+				<!-- END PAGE CONTENT-->
+			</div>
+			<!-- END PAGE CONTAINER--> 
+		</div>
+		<!-- END PAGE -->    
+	</div>
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+	<div class="footer">
+    <div class="footer-inner">
+        2016 &copy; GORL.
+    </div>
+    <div class="footer-tools">
+			<a href="#" > <span class="go-top">
+			<i class="icon-angle-up"></i>
+			</span></a>
+    </div>
+</div>
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   
+	<script src="js/jquery-1.10.1.js" type="text/javascript"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova-2.4.0.js"></script>
+	<script src="js/jquery-migrate-1.2.1.js" type="text/javascript"></script>
+	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+	   
+	<script src="js/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
+	<!--[if lt IE 9]>
+	<script src="js/excanvas.min.js"></script>
+	<script src="js/respond.min.js"></script>  
+	<![endif]-->   
+	<script src="js/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="js/jquery.blockui.min.js" type="text/javascript"></script>  
+	<script src="js/jquery.cookie.min.js" type="text/javascript"></script>
+	<script src="js/jquery.uniform.min.js" type="text/javascript" ></script>
+  <script type="text/javascript" src="js/tilejs/tileJs.min.js"></script>
+          <script src="js/html2canvas.js"></script>
+  
+	<!-- END CORE PLUGINS -->
+	
+
+	<script>
+		jQuery(document).ready(function() {  
+		//$("#homebtn").trigger('click');
+		// document.querySelector('#content').innerHTML = sessionStorage.getItem('counter');   
+		
+		  
+		//$('#pername').text("Person Name : "+sessionStorage.getItem('pername'));
+		
+		// $("#uid").val(sessionStorage.getItem('counter'));
+		// $('#validationid').val(sessionStorage.getItem('validationid'));
+		 
+//var s = $('#validationid').val();
+		 //if (s) {
+		 //$('#pername').show();
+		 $("#homebtn").click(function(){
+		 //$('#set').removeClass('double');
+		 $("#FindId").show();
+		 $("#a_gender").show();
+		$("#a_age").show();
+		  $("#steth").show();
+		  $("#temp").show();
+		  $("#bpm").show();
+		  $("#ton").show();
+		  $("#ecg").show();
+		  $("#pox").show(); 
+		  $("#bpSend").show();
+		  $("#glucometer").show();
+		  $("#start").show();
+		  $("#stop").hide();
+		  $("#settings").hide();
+		  $("#com_glu").show();
+		  $("#com_pul").show();
+		  $("#com_therm").show();
+		  $("#com_bp").show();
+		  $("#glucoValueReturn").text("");
+		  $("#poxValueReturn").text("");
+		  $("#bpmValueReturn").text("");
+		  $("#thermValueReturn").text("");
+		  $("#FindId").val("");
+		   $("#a_gender").val("");
+		    $("#a_age").val("");
+		  $("#therm").val("");
+		  $("#spo22").val("");
+		  $("#pulse2").val("");
+		  $("#sys").val("");
+		  $("#dia").val("");
+		  $("#gluco").val("");
+		   $(".clrhide").hide();
+		   $(".audiosh").hide();
+		    $(".compare").val("");
+		    $('#erperid').hide();
+		    $('#chartdiv').hide();
+		    
+		    btnclicked=1;
+				prediv = divi;
+				$('.spin').hide();
+				
+		// $("#whatsapp").show();
+		 });
+		//}
+		
+		$('#CancelReg').click(function () {
+		$('.tiles').show();
+		$('#AddNewForm').hide();
+		});
+		$('#set').click(function () {
+		///alert("NFHhv");
+		$("#FindId").hide();
+		$("#a_gender").hide();
+		$("#a_age").hide();
+		$('#settings').show();
+		 $("#steth").hide();
+		  $("#temp").hide();
+		  $("#bpm").hide();
+		  $("#ton").hide();
+		  $("#ecg").hide();
+		  $("#pox").hide(); 
+		  $("#bpSend").hide();
+		  $("#glucometer").hide();
+		  $("#start").hide();
+		  $("#stop").hide();
+		  $("#com_glu").hide();
+		  $("#com_pul").hide();
+		  $("#com_therm").hide();
+		  $("#com_bp").hide();
+		  $("#glucoValueReturn").text("");
+		  $("#poxValueReturn").text("");
+		  $("#bpmValueReturn").text("");
+		  $("#thermValueReturn").text("");
+		  $("#FindId").val("");
+		   $("#a_gender").val("");
+		    $("#a_age").val("");
+		  $("#therm").val("");
+		  $("#spo22").val("");
+		  $("#pulse2").val("");
+		  $("#sys").val("");
+		  $("#dia").val("");
+		  $("#gluco").val("");
+		   $(".clrhide").hide();
+		   $(".audiosh").hide();
+		    $(".compare").val("");
+		  $('#erperid').hide();
+		  $('#chartdiv').hide();
+		  
+		//$('.tiles').show();
+		//$('#AddNewForm').hide();
+		});
+
+
+		
+		$('#ecg_button').click(function () {
+		$('.tiles').hide();
+		$('#EcgResult').show();
+		});
+	   
+		});
+	</script>	
+	<script type="text/javascript" charset="ISO-8859-1" src="js/prago.js"></script>
+	<script type="text/javascript" charset="ISO-8859-1" src="js/bluetooth.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/soapclient.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/startapp.js"></script>
+	<script type="text/javascript" src="js/jquery.jqplot.min.js"></script>
+   <script type="text/javascript" src="js/jqplot.canvasTextRenderer.min.js"></script>
+  	<script type="text/javascript" src="js/jqplot.canvasAxisLabelRenderer.min.js"></script>
+	<script class="include" language="javascript" type="text/javascript" src="js/jqplot.dateAxisRenderer.min.js"></script>
+	
+	
+
+	
+
+	<!-- END JAVASCRIPTS -->
+</body>
+
+
+<!-- END BODY -->
+</html>

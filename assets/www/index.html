@@ -17,15 +17,20 @@
 	<link href="css/style.css" rel="stylesheet" type="text/css"/>
 	<link href="css/style-responsive.css" rel="stylesheet" type="text/css"/>
 	<link href="css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
-	<link href="css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link href="css/uniform.default.css" rel="stylesheet" type="text/css" />
 	
+<style type="text/css">
+.thumbnail {
+margin:center;
 
+}
+</style>
 	<!-- END GLOBAL MANDATORY STYLES -->
 	
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body onload="onDeviceReady()">
+<body onload="onDeviceReady()" class="page-header-fixed page-footer-fixed">
 
 	<!-- BEGIN CONTAINER -->   
 	<div class="page-container row-fluid">
@@ -43,8 +48,24 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home"></i>
-								<a href="index.html">Home</a> 
+								<a id="homebtn">Home</a> 
 								<i class="icon-angle-right"></i>
+								
+						
+							</li>
+							<li class="pull-right">
+								
+								<div  id="set">
+									
+								<img class="bg-torchbg" id="trchimg" src="images/setup1.png" alt="" style="margin-top:-5px; margin-right:10px;"" width="30"></div>
+						
+							</li>
+							<li class="pull-right">
+								
+								<a id="bpSend">
+									<img class="bg-yellow" src="images/upload.png" alt="" style="margin-top:-5px; margin-right:20px;" width="30">
+								</a>
+						
 							</li>
 							<span style="float:right" id="content"></span>
 						</ul>
@@ -54,9 +75,11 @@
 				</div>
 				<!-- END PAGE HEADER-->
 				<!-- BEGIN PAGE CONTENT-->
-				<div class="tiles">
+				<div class="tiles" >
+				
 				<div id="erperid" class="hide alert alert-error"><strong>Person Id Not Available!</strong></div>
-					<a class="tile bg-yellow " href="regform.html" id="addfile_button">
+						
+					<!--<a class="tile bg-yellow " href="regform.html" id="addfile_button">
 						<div class="tile-body">
 						<img src="images/file_add.png" alt="">
 						</div>
@@ -64,9 +87,9 @@
 							
 
 						</div>
-						</a>
+						</a>-->
 					
-					<a class="tile bg-blue " href="find.html" id="find_button">
+					<!--<a class="tile bg-blue" href="find.html" id="find_button">
 						<div class="tile-body">
 							<img src="images/find.png" alt="">
 						</div>
@@ -75,68 +98,317 @@
 							</div>
 							
 						</div>
-					</a>					
-					<div class="tile double bg-green" style="display:none"  id="steth">
+					</a>-->		
+					<div id="AddNewForm" class="hide"> 
+				
+					<div class="portlet box purple">
+										<div class="portlet-title">
+											<div class="caption"><i class="icon-reorder"></i>Device Settings</div>
+											<div class="tools">
+												<a href="javascript:;" class="collapse"></a>
+												<a href="#portlet-config" data-toggle="modal" class="config"></a>
+												<a href="javascript:;" class="reload"></a>
+												<a href="javascript:;" class="remove"></a>
+											</div>
+										</div>
+											<div class="portlet-body form">
+												<div class="row-fluid">
+													<div class="span12 ">
+
+													
+														<button id="discoverBT" class="btn blue m-wrap span12">Discover <img class="hide" align='right' width="22"  src="images/ajax-modal-loading.gif" id="disimg"></button> 
+															
+															<select id='bt-devices-select' class="m-wrap span12 hide"></select>											
+															<!--<select class="m-wrap span12" id='bt-bondeddevices-select'>
+																<option value="null">-select Device From List-</option>
+																<option value="+tronic SwissKnife">+tronic SwissKnife</option>
+																<option value="Ultra2 Glucometer">Ultra2 Glucometer</option>
+																<option value="3 Lead ECG">3 Lead ECG</option>
+																<option value="Weighing Scale">Weighing Scale</option>    	
+															</select>-->
+															<br><div><button id="selectval" class="btn green span6">ADD</button> <button id="delch" class="btn red span6" >Delete All</button> </div>
+															<table id="readSuccess" class="table table-bordered  table-hover"><tr><th>Device Name</th><th>Device Address</th><th> </th></tr>
+															</table>		
+														
+												
+
+														</div>
+													
+													</div>
+													
+
+											</div>											
+											</div>		
+											
+										<div><button id="server_settings" class="btn grey span6">Server Settings</button> <button id="key_settings" class="btn label-info span6" >Key Settings</button> </div>
+									<br>
+									<div class="portlet box blue hide" id="key_hs">
+										<div class="portlet-title">
+											<div class="caption"><i class="icon-reorder"></i>Key Settings</div>
+											<div class="tools">
+												<a href="javascript:;" class="collapse"></a>
+												<a href="#portlet-config" data-toggle="modal" class="config"></a>
+												<a href="javascript:;" class="reload"></a>
+												<a href="javascript:;" class="remove"></a>
+											</div>
+										</div>
+											<div class="portlet-body form">
+												<div class="row-fluid">
+													<div class="span12 ">
+
+													<div><button id="add_server" class="btn green span6">ADD KEY</button><button id="conf_server" class="btn yellow span6">Configuration </button></div>
+															
+															<div class="hide" id="confser">
+															<table width="100%"><tr><td class="span8"><select id='serv_sel' class="m-wrap span12 "></select></td>
+															<td class="span4"><button id="add_serv" class="btn green span12">ADD</button></td></tr></table>
+															</div>
+															<br>
+															<div id="readserver" class="span6"><table id="sreadserver" class="table table-bordered  table-hover"><tr><th>Server URL</th><th> </th></tr>
+															
+															</table></div>	
+															
+															         <br><div id="addpart" class="hide"><input type="text" class="span12" id="url_server" placeholder="Service key" />
+															            
+															            
+															<div><button id="add_url" class="btn green span12">ADD</button></div>	</div>						
+															
+																
+														
+												
+
+														</div>
+													
+													</div>
+													
+
+											</div>											
+											</div>
+											
+											<div class="portlet box blue hide" id="server_hs">
+										<div class="portlet-title">
+											<div class="caption"><i class="icon-reorder"></i>Server Settings</div>
+											<div class="tools">
+												<a href="javascript:;" class="collapse"></a>
+												<a href="#portlet-config" data-toggle="modal" class="config"></a>
+												<a href="javascript:;" class="reload"></a>
+												<a href="javascript:;" class="remove"></a>
+											</div>
+										</div>
+											<div class="portlet-body form">
+												<div class="row-fluid">
+													<div class="span12 ">
+
+													<div><button id="add_server1" class="btn green span6">ADD SERVER</button><button id="conf_server1" class="btn yellow span6">Configuration </button></div>
+															
+															<div class="hide" id="confser1">
+															<table width="100%"><tr><td class="span8"><select id='serv_sel1' class="m-wrap span12 "></select></td>
+															<td class="span4"><button id="add_serv1" class="btn green span12">ADD</button></td></tr></table>
+															</div>
+															<br>
+															<div id="readserver1" class="span6"><table id="sreadserver1" class="table table-bordered  table-hover"><tr><th>Server URL</th><th> </th></tr>
+															
+															</table></div>	
+															
+															         <br><div id="addpart1" class="hide"><input type="text" class="span12" id="url_server1" placeholder="Server URL" />
+															            
+															            
+															<div><button id="add_url1" class="btn green span12">ADD</button></div>	</div>						
+															
+																
+														
+												
+
+														</div>
+													
+													</div>
+													
+
+											</div>											
+											</div>
+				
+				</div>		
+											<div class="portlet-body form">
+											
+												<div class="row-fluid" >
+													<div class="span12 ">
+														<div class="control-group">
+															
+															 <div class="input-group">
+															            <input type="text" id="FindId" style=" width: 90%; height: 30px;" placeholder="Patient ID"/>
+															            
+															            </div>
+															            </div>
+															            </div>
+															            </div>
+															            </div>
+					<div class="tile double bg-steathbg" style="display:none; "  id="start">
 						<div class="tile-body">
-							<img src="images/stethoscope.png" height="" width="120" alt="">
+						<img id="starts" style="" src="images/fstart.png" width="40">
+							<div><img src="images/steth.png" height="" width="120" alt=""  style="margin-left:20px;"></div>
 						
 						</div>
 						
 						<div class="tile-object"> 
+							<!--<img id="pausebtn" align="left" src="images/Green.png" style="height:15px;width:15px;"  class="ui-btn-left" />-->
 							
-							<img id="stethGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
-							<img id="stethOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
-							<img id="stethRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
-							<img class="hide" align='left' width="30"  src="images/ajax-modal-loading.gif" id="dissth">
-							<audio id="stethaud" src="file:///mnt/sdcard/prago/steth.wav" controls="true" preload ="none" class="hide span11" ></audio>
+							<img class="stethGreen clrhide" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;" />
+							<img class="stethOrange clrhide" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"/>
+							<img class="stethRed clrhide" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"/>
+							<img class="dissth hide spin" align='left' width="30"  src="images/ajax-modal-loading.gif">
+							<div class="audiosh hide"><audio id="stethaud" src="file:///mnt/sdcard/prago/steth.wav" controls="true" preload ="none" class="hides span11" ></audio></div>
 							
 						</div>
 					
 					</div>
+					<div class="tile double bg-steathbg" style="display:none; "  id="stop">
+						<div class="tile-body">
+						<img id="stops" src="images/fstop.png" width="40" style="align:right;">
+							<div><img src="images/steth.png" height="" width="120" alt=""></div>
 						
+						</div>
+						
+						<div class="tile-object"> 
+							<!--<img id="pausebtn" align="left" src="images/Green.png" style="height:15px;width:15px;"  class="ui-btn-left" />-->
+							
+							<img class="stethGreen clrhide" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"/>
+							<img class="stethOrange clrhide" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"/>
+							<img class="stethRed clrhide" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"/>
+							<img class="hide dissth spin" align='left' width="30"  src="images/ajax-modal-loading.gif" >
+							<div class="audiosh hide"><audio id="stethauds" src="file:///mnt/sdcard/prago/steth.wav" controls="true" preload ="none" class="hides span11" ></audio></div>
+							
+						</div>
 					
-					<div class="tile bg-purple " style="display:none" id="temp">
+					</div>
+					
+					<div class="tile bg-gluco" style="display:none; " id="glucometer">
+						<div class="tile-body" style="margin-left:12px;">
+						<img src="images/gluco.png" alt="" width="100">
+						</div>
+						<div class="tile-object">
+						<div class="name">
+								<strong><div id="glucoValueReturn" style="font-size:21px;">  </div>	</strong>
+							</div>
+							<img id="glucometerGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="glucometerOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="glucometerRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />	
+							<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="glucospinner">					
+						</div>
+					</div>					
+					
+						<div class="tile bg-spo2bg" style="display:none;" id="pox">
+						<div class="tile-body">
+								<img src="images/pulse.png" alt="" width="120" style="margin-top:-11px;">
+						</div>
+						<div class="tile-object">
+							<div class="name">
+								<strong><div id="poxValueReturn" style="font-size:20px; line-height:100%; text-transform: lowercase;"></div>	</strong>
+							</div>
+							<img id="poxGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="poxOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="poxRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="dispox">
+						</div>
+					</div>
+					
+					<div class="tile bg-thermo " style="display:none; " id="temp">
 											
-						<div class="tile-body">
-							<img src="images/tempr.png" alt="">
+						<div class="tile-body" style="margin-left:12px;">
+							<img src="images/temp.png" alt="" width="110">
 						
 						</div>
 						<div class="tile-object">
-						<h3>	<strong><div id ="thermValueReturn" ></div></strong></h3>
+							<strong><div id ="thermValueReturn" style="font-size:21px;margin-bottom:0px;"></div></strong>
 						
-						<img id="tempGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
-						<img id="tempOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
-						<img id="tempRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
-						<img class="hide" align='left' width="20"  src="images/ajax-modal-loading.gif" id="distmp">
+						<img id="tempGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+						<img id="tempOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+						<img id="tempRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+						<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="distmp">
 						</div>
 
 					</div>
 
 
-
-					<div class="tile  bg-yellow " style="display:none" id="bpm">
-						<div class="tile-body">
-						<img src="images/sick_15-512.png" alt="">
+					<div class="tile bg-bpmbg " style="display:none" id="bpm">
+						<div class="tile-body" style="margin-left:12px;">
+						<img src="images/bpm.png" width="100" alt="">
 							
 						</div>
 						<div class="tile-object">
-			<h3>	<strong><div id="bpmValueReturn" style="font-size:18px"></div></strong></h3>
-			<img id="bpmGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>
-			<img id="bpmOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>
-			<img id="bpmRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>
-			<img class="hide" align='left' width="20"  src="images/ajax-modal-loading.gif" id="disbp">
+						
+				<strong><div id="bpmValueReturn" style="font-size:21px; margin-left:10px;"></div></strong>
+		
+			<img id="bpmGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+			<img id="bpmOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+			<img id="bpmRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+			<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="disbp">
 						</div>
 					</div>
 
-					<div class="tile bg-blue " style="display:none" id="ton">
+					
+					<div class="tile double bg-ecgbg" style="display:none; " id="ecg">
+						<div class="tile-body"  style="margin-left:60px; margin-top:-20px;">
+						<img src="images/ecg.png" alt="" width="150px;">
+						</div>
+						<div class="tile-object">
+							<img id="ecgGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="ecgOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />
+							<img id="ecgRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right clrhide" />	
+							<img class="hide spin" align='left' width="20"  src="images/ajax-modal-loading.gif" id="ecgspinner">					
+						</div>
+					</div>
+					
+					<div class="row-fluid">
+					<div class="span12">
+              
+						<!-- BEGIN DYNAMIC CHART PORTLET-->
+						<div class="portlet box blue hide" id="chartdiv">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-reorder"></i>ECG</div>
+								<div class="tools">
+									<a href="javascript:;" class="collapse"></a>
+									<a href="#portlet-config" data-toggle="modal" class="config"></a>
+									<a href="javascript:;" class="reload"></a>
+									<a href="javascript:;" class="remove"></a>
+								</div>
+							</div>
+							<div class="portlet-body">
+							<!--	<div id="chart_4" class="chart"></div>-->
+
+						<table class="table">
+						<tr><td>
+							<div id="chart1" style="height:160px; display : none "></div>
+							<div id="chart2" style="height:160px; display : none "></div>
+							<div id="chart3" style="height:180px; display : none "></div>
+						</td></tr>
+						</table>						
+							
+							</div>
+						</div>
+						<!-- END DYNAMIC CHART PORTLET-->
+
+             
+					</div>
+				</div>
+					
+					
+					
+				<!--	<div class="tile  bg-purple "  id="power_button">
+					
 						<div class="tile-body">
-						<img id="trchimg" src="images/torchof.png" alt="">
+							<img src="images/power-off-button.png" alt="">
+						</div>
+
+					</div>	-->	
+					
+					<!--<div class="tile bg-blue " style="display:none" id="ton">
+						<div class="tile-body">
+						<img id="trchimg" src="images/torch.png" alt="">
 						
 						</div>
 						<div class="tile-object">
-						<img id="torchGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>
-						<img id="torchOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>
-						<img id="torchRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>						
+						<img id="torchGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
+						<img id="torchOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />
+						<img id="torchRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right" />	-->					
 						
 		<!--	<select name="torchval" id="torchval"  >   
 				<option  value="Off">OFF</option>
@@ -147,43 +419,13 @@
 			<button id="ton" class="mini btn green">ON</button><button value="Off" id="toff" class="mini btn red">OFF</button>-->
 			
 		
-						</div>
-					</div>
-
-					<a class="tile bg-green" style="display:none" href="charts_prago.html" id="ecgchange">
+						<!--</div>
+					</div>-->
+													
+						<!--<a class="tile bg-torchbg" id="set" style="margin-left:7px;" href="setup.html">
+						
 						<div class="tile-body">
-						<img src="images/ecg1.png" alt="">
-						</div>
-						<div class="tile-object">
-							
-						</div>
-					</a>
-				<!--	<div class="tile  bg-purple "  id="power_button">
-					
-						<div class="tile-body">
-							<img src="images/power-off-button.png" alt="">
-						</div>
-
-					</div>	-->	
-					<div class="tile image double selected " style="display:none" id="pox">
-						<div class="tile-body">
-								<img src="images/po.jpg" alt="">
-						</div>
-						<div class="tile-object">
-							<div class="name">
-								<strong><div id="poxValueReturn" style="font-size:18px;">  </div>	</strong>
-							</div>
-							<img id="poxGreen" align="right" src="images/Green.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>
-							<img id="poxOrange" align="right" src="images/Orange.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>
-							<img id="poxRed" align="right" src="images/Red.png" style="display:none;height:15px;width:15px;"  class="ui-btn-right"/>
-							<img class="hide" align='left' width="20"  src="images/ajax-modal-loading.gif" id="dispox">
-						</div>
-					</div>								
-						<a class="tile bg-purple double" id="set" href="setup.html">
-						<div class="corner"></div>
-						<div class="check"></div>
-						<div class="tile-body">
-							<i class="icon-cogs"></i>
+							<img id="trchimg" src="images/setup1.png" alt="">
 						</div>
 						<div class="tile-object">
 							<div class="name">
@@ -191,19 +433,43 @@
 							</div>
 						</div>
 					</a>
+
+					
 					<a class="tile bg-yellow " style="display:none" id="bpSend">
 						<div class="corner"></div>
 						<div class="check"></div>
 						<div class="tile-body">
-							<img src="images/cloud_upload.png" alt="">
+							<img src="images/upload.png" alt="">
 						</div>
 						<div class="tile-object">
 							<div class="name">
 								
 							</div>
 						</div>
-					</a>
+					</a>-->
+					
+					
+        	<input type="button" id="saveFile_btn" value="Save" class="hide"/>
+        	
+					
+						
+						<!--<a class="tile bg-yellow" style="display:none" id="whatsapp">
+						<div class="corner"></div>
+						<div class="check"></div>
+						<div class="tile-body">
+							<i class="icon-share" style="margin-top:30px;"></i>
+						</div>
+						<div class="tile-object">
+							<div class="name">
+								
+							</div>
+						</div>
+					</a>	-->						
+						
+					
 
+									
+<br>
 
 
 <div id="resvaldiisp" style="display:none"></div>
@@ -212,8 +478,10 @@
 <input type="hidden" id="pulse2" />
 <input type="hidden" id="sys" />
 <input type="hidden" id="dia" />
+<input type="hidden" id="gluco" />
 <input type="hidden" id="uid" />
 <input type="hidden" id="validationid" />
+<button id="DevAll" class="hide"></button>
 
 
 				</div>
@@ -227,7 +495,16 @@
 	</div>
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->
-
+	<div class="footer">
+    <div class="footer-inner">
+        2016 &copy; GORL.
+    </div>
+    <div class="footer-tools">
+			<a href="#" > <span class="go-top">
+			<i class="icon-angle-up"></i>
+			</span></a>
+    </div>
+</div>
 	<!-- END FOOTER -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->   
@@ -252,33 +529,110 @@
 
 	<script>
 		jQuery(document).ready(function() {    
-		 document.querySelector('#content').innerHTML = sessionStorage.getItem('counter');   
-		// document.querySelector('#pername').innerHTML = sessionStorage.getItem('pername');
-		 
-		$('#pername').text("Person Name : "+sessionStorage.getItem('pername'));
+		// document.querySelector('#content').innerHTML = sessionStorage.getItem('counter');   
 		
-		 $("#uid").val(sessionStorage.getItem('counter'));
-		 $('#validationid').val(sessionStorage.getItem('validationid'));
+		  
+		//$('#pername').text("Person Name : "+sessionStorage.getItem('pername'));
+		
+		// $("#uid").val(sessionStorage.getItem('counter'));
+		// $('#validationid').val(sessionStorage.getItem('validationid'));
 		 
-var s = $('#validationid').val();
-		 if (s) {
-		 $('#pername').show();
+//var s = $('#validationid').val();
+		 
 		 $('#set').removeClass('double');
 		  $("#steth").show();
 		  $("#temp").show();
 		  $("#bpm").show();
 		  $("#ton").show();
-		  $("#ecgchange").show();
-		  $("#pox").show();
+		  $("#ecg").show();
+		  $("#pox").show(); 
 		  $("#bpSend").show();
-	
-}
+		  $("#glucometer").show();
+		  $("#start").show();
+		  $("#stop").hide();
+		 //$("#whatsapp").show();
+		 $("#homebtn").click(function(){
+		
+		 $("#FindId").show();
+		 
+		  $("#steth").show();
+		  $("#temp").show();
+		  $("#bpm").show();
+		  $("#ton").show();
+		  $("#ecg").show();
+		  $("#pox").show(); 
+		  $("#bpSend").show();
+		  $("#glucometer").show();
+		  $("#start").show();
+		  $("#stop").hide();
+		  $("#AddNewForm").hide();
+		  
+		  $("#glucoValueReturn").text("");
+		  $("#poxValueReturn").text("");
+		  $("#bpmValueReturn").text("");
+		  $("#thermValueReturn").text("");
+		  $("#FindId").val("");
+		  
+		  $("#therm").val("");
+		  $("#spo22").val("");
+		  $("#pulse2").val("");
+		  $("#sys").val("");
+		  $("#dia").val("");
+		  $("#gluco").val("");
+		   $(".clrhide").hide();
+		   $(".audiosh").hide();
+		    $(".compare").val("");
+		    $('#erperid').hide();
+		    $('#chartdiv').hide();
+		    
+		    btnclicked=1;
+				prediv = divi;
+				$('.spin').hide();
+				
+		
+		 });
 		
 		$('#CancelReg').click(function () {
 		$('.tiles').show();
 		$('#AddNewForm').hide();
 		});
-
+			$('#set').click(function () {
+		///alert("NFHhv");
+		$("#FindId").hide();
+		
+		$('#AddNewForm').show();
+		 $("#steth").hide();
+		  $("#temp").hide();
+		  $("#bpm").hide();
+		  $("#ton").hide();
+		  $("#ecg").hide();
+		  $("#pox").hide(); 
+		  $("#bpSend").hide();
+		  $("#glucometer").hide();
+		  $("#start").hide();
+		  $("#stop").hide();
+		  
+		  $("#glucoValueReturn").text("");
+		  $("#poxValueReturn").text("");
+		  $("#bpmValueReturn").text("");
+		  $("#thermValueReturn").text("");
+		  $("#FindId").val("");
+		   
+		  $("#therm").val("");
+		  $("#spo22").val("");
+		  $("#pulse2").val("");
+		  $("#sys").val("");
+		  $("#dia").val("");
+		  $("#gluco").val("");
+		   $(".clrhide").hide();
+		   $(".audiosh").hide();
+		    $(".compare").val("");
+		  $('#erperid').hide();
+		  $('#chartdiv').hide();
+		  
+		//$('.tiles').show();
+		//$('#AddNewForm').hide();
+		});
 
 		
 		$('#ecg_button').click(function () {
@@ -288,7 +642,6 @@ var s = $('#validationid').val();
 	   
 		});
 	</script>	
-	
 	<script type="text/javascript" charset="ISO-8859-1" src="js/prago.js"></script>
 	<script type="text/javascript" charset="ISO-8859-1" src="js/bluetooth.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/soapclient.js"></script>
@@ -297,6 +650,7 @@ var s = $('#validationid').val();
    <script type="text/javascript" src="js/jqplot.canvasTextRenderer.min.js"></script>
   	<script type="text/javascript" src="js/jqplot.canvasAxisLabelRenderer.min.js"></script>
 	<script class="include" language="javascript" type="text/javascript" src="js/jqplot.dateAxisRenderer.min.js"></script>
+	
 	
 
 	

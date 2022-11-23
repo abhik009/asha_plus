@@ -42,6 +42,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
+import com.filter.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -302,7 +303,7 @@ public class BluetoothPlugin extends Plugin {
 						Calendar newCal = Calendar.getInstance();
 						Date endTime = newCal.getTime();
 
-						if ((endTime.getTime()-startTime.getTime())<60000)
+						if ((endTime.getTime()-startTime.getTime())<120000)//Increased timeout
 						{
 
 								if (inputStream.available()>0)
@@ -369,7 +370,10 @@ public class BluetoothPlugin extends Plugin {
 
 					int socketId = args.getInt(0);
 					Calendar cal = Calendar.getInstance();
-
+					File ecgPath = Environment.getExternalStorageDirectory();
+					File ecg = new File (ecgPath,"/prago/ecg.txt");
+					FileWriter fos = new FileWriter(ecg,false);
+					String stringBuf = new String("");
 			    	Date startTime = cal.getTime();
 
 					//Log.d( "BluetoothPlugin", "Get Data..." );
@@ -394,7 +398,7 @@ public class BluetoothPlugin extends Plugin {
 						Calendar newCal = Calendar.getInstance();
 						Date endTime = newCal.getTime();
 
-						if ((endTime.getTime()-startTime.getTime())<12000)
+						if ((endTime.getTime()-startTime.getTime())<15000)
 						{
 
 							if (inputStream.available()>0)
@@ -425,15 +429,16 @@ public class BluetoothPlugin extends Plugin {
 					}
 					if (timeOut)
 					{
-						recvdString= "Aborted";
+						stringBuf= "Aborted";
+						fos.write(stringBuf);
+						fos.flush();
+						fos.close();
 					}
 					else
 					{
-						File ecgPath = Environment.getExternalStorageDirectory();
-						File ecg = new File (ecgPath,"/prago/ecg.txt");
-						FileWriter fos = new FileWriter(ecg,false);
+						
 
-						String stringBuf = new String("");
+						
 						//long byteCnt
 						byteCnt = (i-1)/3;
 						long[] buf2 = new long[byteCnt];
@@ -519,13 +524,18 @@ public class BluetoothPlugin extends Plugin {
 					byte [] buf = new byte[10000];
 					firstChar[0] = 0x52;
 					File stethPath = Environment.getExternalStorageDirectory();
-					File steth = new File (stethPath,"/prago/steth.wav");
+					File steth = new File (stethPath,"/prago/stet.wav");
+					File steth_filter = new File (stethPath,"/prago/steth.wav");
 					FileOutputStream fos = new FileOutputStream(steth);
+					
+					// Pradeep code /****************************************/
+					MainFilter audio_filter = new MainFilter();
+				/********************************************************/
 					while (j)
 					{
 						Calendar newCal = Calendar.getInstance();
 						Date endTime = newCal.getTime();
-						if ((endTime.getTime()-startTime.getTime())<90000)
+						if ((endTime.getTime()-startTime.getTime())<690000)
 						{
 							if (inputStream.available()>0)
 							{
@@ -603,7 +613,13 @@ public class BluetoothPlugin extends Plugin {
 											fos.close();
 											j= false;
 										//i++;
-										 recvdString= steth.getPath();
+											// Pradeep code /****************************************/
+											
+											audio_filter.filter(stethPath+"/prago/stet",2); // second paramenter ***option*** = 1 for 900 hz filtering ***option*** =2 for 1000 hz filtering
+											//audio_filter.filter(stethPath+"/prago/steth",2); 
+											/********************************************************/
+											Log.d( "BluetoothPlugin", "File: "+stethPath+"/prago/steth");
+											recvdString= steth_filter.getPath();
 
 										}
 
@@ -626,7 +642,12 @@ public class BluetoothPlugin extends Plugin {
 							// recvdString= "Aborted";
 								fos.flush();
 								fos.close();
-								recvdString= steth.getPath();
+								// Pradeep code /****************************************/
+								audio_filter.filter(stethPath+"/prago/stet",2); // second paramenter ***option*** = 1 for 900 hz filtering ***option*** =2 for 1000 hz filtering
+							/********************************************************/
+								Log.d( "BluetoothPlugin", "File: "+stethPath+"/prago/steth.wav");
+								recvdString= steth_filter.getPath();
+								Log.d( "BluetoothPlugin", "File: "+recvdString);
 						}
 
 					}
@@ -667,7 +688,7 @@ else if( ACTION_READ5.equals(action) ) {
 					//String recvdString;
 					Calendar cal = Calendar.getInstance();
 					//byte [] buf = new byte[245000];
-			    	Date startTime = cal.getTime();
+			   	Date startTime = cal.getTime();
 					String recvdString= "";
 					int i=0;
 					int endofFileDetect=0;
@@ -684,11 +705,15 @@ else if( ACTION_READ5.equals(action) ) {
 					File stethPath = Environment.getExternalStorageDirectory();
 					File steth = new File (stethPath,"/prago/steth.wav");
 					FileOutputStream fos = new FileOutputStream(steth);
+
+					// Pradeep code /****************************************/
+						MainFilter audio_filter = new MainFilter();
+					/********************************************************/
 					while (j)
 					{
 						Calendar newCal = Calendar.getInstance();
 						Date endTime = newCal.getTime();
-						if ((endTime.getTime()-startTime.getTime())<5000)
+						if ((endTime.getTime()-startTime.getTime())<65000)
 						{
 							if (inputStream.available()>0)
 							{
@@ -768,7 +793,11 @@ else if( ACTION_READ5.equals(action) ) {
 											fos.close();
 											j= false;
 										//i++;
-										 recvdString= steth.getPath();
+											// Pradeep code /****************************************/
+											audio_filter.filter(stethPath+"/prago/steth",2); // second paramenter ***option*** = 1 for 900 hz filtering ***option*** =2 for 1000 hz filtering
+										/********************************************************/
+										recvdString= steth.getPath();
+										Log.d( "BluetoothPlugin", "File: "+recvdString);
 
 										}
 
@@ -791,6 +820,9 @@ else if( ACTION_READ5.equals(action) ) {
 							// recvdString= "Aborted";
 								fos.flush();
 								fos.close();
+							// Pradeep code /****************************************/
+								audio_filter.filter(stethPath+"/prago/steth",2); // second paramenter ***option*** = 1 for 900 hz filtering ***option*** =2 for 1000 hz filtering
+							/********************************************************/
 								recvdString= steth.getPath();
 						}
 
@@ -806,8 +838,7 @@ else if( ACTION_READ5.equals(action) ) {
 			}
 
 		//--change--//
-
-
+			
 			else if( ACTION_READ4.equals(action) ) {
 				try {
 					start();
@@ -895,8 +926,9 @@ Calendar newCal = Calendar.getInstance();
 
 					if (data[0] == sendCmdByte)
 					{
-						data = value;
-						Log.d( "BluetoothPlugin", "Sending Onetouch Ultra2 Commands..." );
+						//data = value;
+						data = args.getString(1).getBytes("UTF-16LE");
+						Log.d( "BluetoothPlugin", "Changed for ASHA+ Gluco..." );
 					}
 					else if (data[0] == 'e')
 					{

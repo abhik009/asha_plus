@@ -171,35 +171,36 @@
 	                        if (data.response =='true')
 	                        {
 	                        	
-	                 $('#icnfnd').show();
-		$('#disfnd').hide();
-	                        	 $('#disdet').html("");
-	                        	 $('#disdet').html("<table class='table table-bordered  table-hover' id='disresult'>");
-	                        	 $('#disresult').append("<tr><th>Name</th><td>"+data.name+"</td></tr><tr><th>Id</th><td>"+data.emp_id+"</td></tr><tr><th>Gender</th><td>"+data.sex+"</td></tr><tr><th>Age</th><td>"+data.age+"</td></tr>");
-	                        	 $('#disdet').append("</table>");
+	                 				$('#icnfnd').show();
+										$('#disfnd').hide();
+	                        	$('#disdet').html("");
+	                        	$('#disdet').html("<table class='table table-bordered  table-hover' id='disresult'>");
+	                        	$('#disresult').append("<tr><th>Name</th><td>"+data.name+"</td></tr><tr><th>Id</th><td>"+data.emp_id+"</td></tr><tr><th>Gender</th><td>"+data.sex+"</td></tr><tr><th>Age</th><td>"+data.age+"</td></tr>");
+	                        	$('#disdet').append("</table>");
 	                        	      
-     												   sessionStorage['counter'] =data.emp_id;
-     												   sessionStorage['pername'] =data.name;
-     												   sessionStorage['validationid'] ="1";
+     									sessionStorage['counter'] =data.emp_id;
+     									sessionStorage['pername'] =data.name;
+     									sessionStorage['validationid'] ="1";
      												   
-   											 		document.querySelector('#content').innerHTML = sessionStorage.getItem('counter');
+   									document.querySelector('#content').innerHTML = sessionStorage.getItem('counter');
    											 		
    											 		
    											 		
 	                        }
-	                        else {
-	                        $('#icnfnd').show();
-		$('#disfnd').hide();
+	                        else 
+	                        {
+	                        	$('#icnfnd').show();
+										$('#disfnd').hide();
 	
-}
+									}
 	                    },
 	                    'error': function () {
-	                    	                 $('#icnfnd').show();
-		$('#disfnd').hide();
-		$('#GetFindRes').removeClass('green');
-		$('#GetFindRes').addClass('red');
+	                    	       $('#icnfnd').show();
+										 $('#disfnd').hide();
+										 $('#GetFindRes').removeClass('green');
+		                         $('#GetFindRes').addClass('red');
 	
-}
+								}
 	                });
 	                
 	                $.ajax({
